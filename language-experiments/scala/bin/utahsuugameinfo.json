@@ -1,0 +1,102 @@
+{
+		     "id":"2197799",
+		     "lastUpdated":"1472793480",
+		     "updatedTimestamp":"2016-09-02 01:18:15",
+		     
+		     "conference":"all-conf pac-12 big-sky",
+			 "gameState":"final",
+		     "startDate":"2016-09-01",
+			 "startDateDisplay":"Sept. 1",
+		     "startTime":"8:00 PM ET",
+			 "startTimeEpoch":"1472774400",
+		     "currentPeriod":"Final",
+		     "finalMessage":"Final",
+		     "gameStatus":"Final",
+		     "periodStatus":"End",
+		     "downToGo":"3RD AND 8",
+		     "timeclock":"",		     
+		     "network_logo":"",
+		     "location":"Rice-Eccles Stadium, Salt Lake City, UT",
+		     "contestName":"",
+		     "url":"/game/football/fbs/2016/09/01/southern-utah-utah",
+		     "highlightsUrl":"", 
+		     "liveAudioUrl":"",
+		     "gameCenterUrl":"/game/football/fbs/2016/09/01/southern-utah-utah",
+		     "champInfo": {  },
+		     
+		    "videos":[		 
+			       
+		     ],
+		     
+	         "scoreBreakdown":[
+	   			"1",
+	   			"2",
+	   			"3",
+	   			"4"],
+		     "links":[	
+						    
+		     ],	 
+		     "home": {
+		         "teamRank":"0",
+			     
+		         "iconURL":"/sites/default/files/images/logos/schools/u/utah.70.png",
+		         "name":"<a href='/schools/utah'>Utah</a>",
+                 "nameRaw":"Utah",
+                 "nameSeo":"utah",
+		         "shortname":"UTAH",
+		         "color":"#cc0000",
+		         "social":{"twitter":{"keywords":["#utahutes"],"accounts":{"ncaa":"ncaa_fb","athleticDept":"utahathletics","sport":"Utah_Football","conference":"pac12"}}},
+		         "description":"1-0",
+		         "currentScore":"24",
+		         "scoreBreakdown":[
+	   			"3",
+	   			"14",
+	   			"0",
+	   			"7"],
+
+		         
+		                	         
+		         "winner":"true"
+		         
+		     },
+		     "away": {
+		         "teamRank":"0",
+			     
+		         "iconURL":"/sites/default/files/images/logos/schools/s/southern-utah.70.png",
+		         "name":"<a href='/schools/southern-utah'>Southern Utah</a>",
+                 "nameRaw":"Southern Utah",
+                 "nameSeo":"southern-utah",
+		         "shortname":"S UTAH",
+		      	 "color":"#d8240e",		         
+		         "social":{"twitter":{"keywords":[],"accounts":{"ncaa":"ncaa_fb","sport":"suufootball","conference":"BigSkyConf"}}},
+		         "description":"0-1",
+		         "currentScore":"0",
+		         "scoreBreakdown":[
+	   			"0",
+	   			"0",
+	   			"0",
+	   			"0"],
+
+		         
+		          
+		         "winner":"false"
+		         
+		     },
+			     "tabs": "/sites/default/files/data//game/football/fbs/2016/09/01/southern-utah-utah/tabs.json",
+	    		 "tabsArray":  [[
+	    
+			{"type":"recap", "title":"Recap", "file":"/sites/default/files/data/game/football/fbs/2015/09/01/southern-utah-utah/recap.json"},
+			{"type":"boxscore", "title":"Box Score", "file":"/sites/default/files/data/game/football/fbs/2016/09/01/southern-utah-utah/boxscore.json"},
+			{"type":"scoring-summary", "title":"Scoring", "file":"/sites/default/files/data/game/football/fbs/2016/09/01/southern-utah-utah/scoringSummary.json"},
+			{"type":"team-stats", "title":"Team Stats", "file":"/sites/default/files/data/game/football/fbs/2016/09/01/southern-utah-utah/teamStats.json"},
+			{"type":"play-by-play", "title":"Play-By-Play", "file":"/sites/default/files/data/game/football/fbs/2016/09/01/southern-utah-utah/pbp.json"}
+		]],
+	    		 "status": {},
+    			 "alerts": {"timestamp":"2016-09-02T01:18:15.962-04:00",
+		
+		"upset":
+			0
+		,
+		"redzone": 
+			0}
+		}

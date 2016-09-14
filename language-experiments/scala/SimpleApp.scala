@@ -5,6 +5,8 @@ import org.apache.spark.SparkConf
 
 object SimpleApp {
   def main(args: Array[String]) {
+     val conf = new SparkConf().setAppName("SimpleApp")
+    val sc = new SparkContext(conf)
     //val logFile = "YOUR_SPARK_HOME/README.md" // Should be some file on your system
     //val conf = new SparkConf().setAppName("Simple Application")
     //val sc = new SparkContext(conf)

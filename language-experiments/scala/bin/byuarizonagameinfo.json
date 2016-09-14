@@ -1,0 +1,102 @@
+{
+		     "id":"2197430",
+		     "lastUpdated":"1472970960",
+		     "updatedTimestamp":"2016-09-04 02:36:46",
+		     
+		     "conference":"all-conf fbs-independent pac-12",
+			 "gameState":"final",
+		     "startDate":"2016-09-03",
+			 "startDateDisplay":"Sept. 3",
+		     "startTime":"10:30 PM ET",
+			 "startTimeEpoch":"1472956200",
+		     "currentPeriod":"Final",
+		     "finalMessage":"Final",
+		     "gameStatus":"Final",
+		     "periodStatus":"End",
+		     "downToGo":"2ND AND 9",
+		     "timeclock":"",		     
+		     "network_logo":"",
+		     "location":"University of Phoenix Stadium, Glendale, AZ",
+		     "contestName":"",
+		     "url":"/game/football/fbs/2016/09/03/arizona-byu",
+		     "highlightsUrl":"", 
+		     "liveAudioUrl":"",
+		     "gameCenterUrl":"/game/football/fbs/2016/09/03/arizona-byu",
+		     "champInfo": {  },
+		     
+		    "videos":[		 
+			       
+		     ],
+		     
+	         "scoreBreakdown":[
+	   			"1",
+	   			"2",
+	   			"3",
+	   			"4"],
+		     "links":[	
+						    
+		     ],	 
+		     "home": {
+		         "teamRank":"0",
+			     
+		         "iconURL":"/sites/default/files/images/logos/schools/b/byu.70.png",
+		         "name":"<a href='/schools/byu'>BYU</a>",
+                 "nameRaw":"BYU",
+                 "nameSeo":"byu",
+		         "shortname":"BYU",
+		         "color":"#002255",
+		         "social":{"twitter":{"keywords":["#byufootball"],"accounts":{"ncaa":"ncaa_fb","athleticDept":"BYUathletics"}}},
+		         "description":"1-0",
+		         "currentScore":"18",
+		         "scoreBreakdown":[
+	   			"0",
+	   			"9",
+	   			"0",
+	   			"9"],
+
+		         
+		                	         
+		         "winner":"true"
+		         
+		     },
+		     "away": {
+		         "teamRank":"0",
+			     
+		         "iconURL":"/sites/default/files/images/logos/schools/a/arizona.70.png",
+		         "name":"<a href='/schools/arizona'>Arizona</a>",
+                 "nameRaw":"Arizona",
+                 "nameSeo":"arizona",
+		         "shortname":"ARIZ",
+		      	 "color":"#003366",		         
+		         "social":{"twitter":{"keywords":["#arizonawildcats"],"accounts":{"ncaa":"ncaa_fb","athleticDept":"AZATHLETICS","conference":"pac12"}}},
+		         "description":"0-1",
+		         "currentScore":"16",
+		         "scoreBreakdown":[
+	   			"0",
+	   			"0",
+	   			"3",
+	   			"13"],
+
+		         
+		          
+		         "winner":"false"
+		         
+		     },
+			     "tabs": "/sites/default/files/data//game/football/fbs/2016/09/03/arizona-byu/tabs.json",
+	    		 "tabsArray":  [[
+	    
+			{"type":"recap", "title":"Recap", "file":"/sites/default/files/data/game/football/fbs/2015/09/03/arizona-byu/recap.json"},
+			{"type":"boxscore", "title":"Box Score", "file":"/sites/default/files/data/game/football/fbs/2016/09/03/arizona-byu/boxscore.json"},
+			{"type":"scoring-summary", "title":"Scoring", "file":"/sites/default/files/data/game/football/fbs/2016/09/03/arizona-byu/scoringSummary.json"},
+			{"type":"team-stats", "title":"Team Stats", "file":"/sites/default/files/data/game/football/fbs/2016/09/03/arizona-byu/teamStats.json"},
+			{"type":"play-by-play", "title":"Play-By-Play", "file":"/sites/default/files/data/game/football/fbs/2016/09/03/arizona-byu/pbp.json"}
+		]],
+	    		 "status": {},
+    			 "alerts": {"timestamp":"2016-09-04T02:36:46.081-04:00",
+		
+		"upset":
+			0
+		,
+		"redzone": 
+			0}
+		}
