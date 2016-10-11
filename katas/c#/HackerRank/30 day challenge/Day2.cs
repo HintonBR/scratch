@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-public class Solution {
+public class Day2 {
 
-    static void Main(string[] args) {
+    static void Run(string[] args) {
 
         int i=4;
         double d = 4.0;
