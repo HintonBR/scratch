@@ -1,5 +1,5 @@
---temp-output:c:\Source\scratch\katas\c#\HackerRank\30 day challenge\obj\Debug\netcoreapp1.0\
---out:c:\Source\scratch\katas\c#\HackerRank\30 day challenge\bin\Debug\netcoreapp1.0\HackerRankChallenge.dll
+--temp-output:c:\Source\Repos\scratch\katas\c#\HackerRank\30 day challenge\obj\Debug\netcoreapp1.0\
+--out:c:\Source\Repos\scratch\katas\c#\HackerRank\30 day challenge\bin\Debug\netcoreapp1.0\HackerRankChallenge.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -87,4 +87,5 @@
 --reference:C:\Users\bryan.hinton\.nuget\packages\System.Threading.Timer\4.0.1\ref\netstandard1.2\System.Threading.Timer.dll
 --reference:C:\Users\bryan.hinton\.nuget\packages\System.Xml.ReaderWriter\4.0.11\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\bryan.hinton\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll
-c:\Source\scratch\katas\c#\HackerRank\30 day challenge\Day2.cs
+c:\Source\Repos\scratch\katas\c#\HackerRank\30 day challenge\Day2.cs
+c:\Source\Repos\scratch\katas\c#\HackerRank\30 day challenge\Day3.cs
