@@ -1,22 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-
-public class Day2 {
-
-    static void Run(string[] args) {
-
-        int i=4;
-        double d = 4.0;
-        string s = "HackerRank ";
-
-        int i2 = int.Parse(Console.ReadLine());
-        double d2 = double.Parse(Console.ReadLine());
-        string s2 = Console.ReadLine();
-
-        Console.WriteLine(i+i2);
-        Console.WriteLine("{0:0.0}", d+d2);
-        Console.WriteLine(s+s2);
-        Console.ReadLine();
+class Day2
+{
+    public void Run(String[] args)
+    {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+        var mealCost = Double.Parse(Console.ReadLine());
+        var tipPercent = Int32.Parse(Console.ReadLine());
+        var taxPercent = Int32.Parse(Console.ReadLine());
+        var totalMealCost = Math.Round(mealCost + (mealCost * ((double)tipPercent / 100)) + (mealCost * ((double)taxPercent / 100)));
+        Console.WriteLine("The total meal cost is {0} dollars.", totalMealCost);
     }
 }

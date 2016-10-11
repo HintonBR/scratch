@@ -1,14 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-class Day3 {
-    static void Main(String[] args) {
+class Day3
+{
+    public void Run(String[] args)
+    {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-        var mealCost = Double.Parse(Console.ReadLine());
-        var tipPercent = Int32.Parse(Console.ReadLine());
-        var taxPercent = Int32.Parse(Console.ReadLine());
-        var totalMealCost = Math.Floor(mealCost + (mealCost*(((double)tipPercent/100)) + (mealCost*((double)taxPercent/100)));
-        Console.WriteLine("The total meal cost is {0} dollars", totalMealCost);
-        Console.ReadLine();
+        int n = int.Parse(Console.ReadLine());
+        if (n % 2 != 0)
+        {
+            Console.WriteLine("Weird");
+        }
+        else if (2 <= n && n <= 5)
+        {
+            Console.WriteLine("Not Weird");
+        }
+        else if (6 <= n && n <= 20)
+        {
+            Console.WriteLine("Weird");
+        }
+        else if (n > 20)
+        {
+            Console.WriteLine("Not Weird");
+        }
     }
 }
