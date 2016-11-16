@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World!");
+        var day = new Day4();
+        day.Run(args);
+        Console.Read();
     }
 }
