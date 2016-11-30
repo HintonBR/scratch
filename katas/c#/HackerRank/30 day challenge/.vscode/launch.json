@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/HackerRankChallenge.dll",
+            "program": "${workspaceRoot}/bin/Debug/30 day challenge.exe",
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/bin/Debug/",
             "stopAtEntry": false,
             "externalConsole": true
         },
