@@ -32,7 +32,7 @@ class Day8
         {
             if(Phonebook.ContainsKey(item)) 
             {
-                Console.Write($"{item}={Phonebook[item]}");
+                Console.WriteLine($"{item}={Phonebook[item]}");
             }
             else 
             {
