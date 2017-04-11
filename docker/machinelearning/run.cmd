@@ -1,0 +1,1 @@
+docker run -d -p 8080:8080 --name fabric.machinelearning imranq2/fabric.machinelearning
