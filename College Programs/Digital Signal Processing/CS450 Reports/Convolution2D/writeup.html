@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Times</h2></caption>
+
+<tr>
+       <th>Convolution</th>
+	   <th>Start Time</th>
+	   <th>Stop Time</th>
+	   <th>Elapsed Time</th>
+</tr>
+<tr>
+       <td align="center">Square * Square</td>
+  	   <td align="center">8:43:18</td>
+	   <td align="center">8:43:36</td>
+	   <td align="center">18 seconds</td>
+	     
+ 
+ 
+ 
+
+</tr>
+<tr>
+	   <td align="center">Square * 2D_Gaussian</td>
+	   <td align="center">8:43:37</td>
+	   <td align="center">8:43:55</td>
+	   <td align="center">18 seconds</td>
+ 
+
+</tr>
+<tr>	   
+  	   <td align="center">Sobel_X * Square</td>
+	   <td align="center">8:44:02</td>
+	   <td align="center">8:44:02</td>
+	   <td align="center">0</td>
+</tr>
+<tr>
+       <td>Sobel_Y * Square</td>
+	   <td align="center">8:44:05</td>
+	   <td align="center">8:44:05</td>
+	   <td align="center">0</td>
+</tr>
+<tr>
+	   <td>Square * Noisy Image</td>
+	   <td align="center">8:44:09</td>
+	   <td align="center">8:45:23</td>
+	   <td align="center">74 seconds</td>
+</tr>
+<tr>
+	   <td>2D_Gaussian * Noisy Image</td>
+	   <td align="center">8:45:24</td>
+	   <td align="center">8:46:39</td>
+	   <td align="center">75 seconds</td>
+</tr>
+</table>
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+<br><br><strong>Part A - Square * Square</strong><br>
+As the kernel moves over the image we see a global averaging at each point.  The outer points that have little overlap between the kernel and then original input signal
+thus tend to be darker especially when scaled in comparison to the other points in the image that have significantly more overlap between convolution kernel and input signal.
+The overall effect is a smoothing and softening effect with the corners rounding out instead of having the hard edges.  The intense white is found only in the middle sections both
+up and down and right to left because that is where the most overlap occurs.
+<br><strong>Part B - Square * 2-D Gaussian</strong><br>
+The same kind of filtering is going on with this part as part A in that an overall smoothing and averaging of the image occurs.
+As the Gaussian moves over the image it is creating an average of the part of the image that it is superimposed over.  The difference is
+that the averaging is a more weighted average with the value of the image at the center of the kernel having a greater weight than the values at the outer
+edge of the kernel.  Because the weighting is more localized we see the image closer to it's original form than with the White_Box filter with only a slight rounding of the edges from the
+points on the edge that are weighted with the values outside of the image (those that register as 0).  
+<br><strong>Part C - Sobel * Square</strong><br>
+The kernels obviously act like dirty filters changing the light colors to darker shades.  The alteration has to do with the positive and negatives that are opposite from one another in the kernel and 
+subtract the values and produce relative uniform output.  The band on the outer edge is produced according to the orientation of the convolution kernel.  
+<br><strong>Part E - 2D_Gaussian Function * Noisy Image</strong><br>
+They both removed a large portion of the noise from the image.  The White_Box function removed the noise, but introduced a large amount of blur into the convolved image.  The 
+Gaussian did better at removing the noise while retaining a cleaner copy of the original image.  This is due to the fact that the Gaussian produces a more weighted local average of the image.  The White Box image produces a more general average of the image and thus
+takes into account other parts of the image that degraded the clarity and sharpness of the resulting image.  
+<br><strong>Part F - The Message</strong><br>
+Give instruction to a wise man, and he will be yet the wiser  
+</tr>
+</table>
+
+</body>
+</html>

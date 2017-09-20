@@ -1,0 +1,31 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: test2 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"Debug/test2.res" /d "_DEBUG" /d "_AFXDLL" "C:\Bryan's Files\classes\cs345\GUI2\test2\test2.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP7112.TMP" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/test2.pdb" /debug /machine:I386 /out:"Debug/test2.exe" /pdbtype:sept 
+".\Debug\MainFrm.obj"
+".\Debug\StdAfx.obj"
+".\Debug\test2.obj"
+".\Debug\test2Doc.obj"
+".\Debug\test2View.obj"
+".\Debug\test2.res"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP7112.TMP"
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+test2.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

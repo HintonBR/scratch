@@ -1,0 +1,27 @@
+void parsePage(Letter[] lArray, URLList *tList, string test) {
+	openURL connectObj = new openURL(name);
+	string tokType;
+	string value;
+	string tString ;
+	summaryInfoFound = false;
+
+	if (connectObj) {
+		while (getNextToken(tokType&, value&)) {
+		
+
+
+		}	
+
+
+	
+	}
+	else {
+		cout << "The page " << name << " could not be opened - Program continuing without parsing this page" << endl;
+	}
+
+	delete connectObj;
+
+
+
+
+}//end of parsePage method

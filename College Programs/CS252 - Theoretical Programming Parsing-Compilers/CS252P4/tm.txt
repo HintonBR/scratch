@@ -1,0 +1,8 @@
+2
+2,z,L,Z,2,L,L
+1,z,L,Z,2,L,L
+1,y,Y,Z,1,L,Z
+0,y,Y,Z,1,L,Z
+0,l,L,L,2,L,L
+0,x,L,L,0,YY,ZZZZ
+0,x,Y,Z,0,YYY,ZZZZZ

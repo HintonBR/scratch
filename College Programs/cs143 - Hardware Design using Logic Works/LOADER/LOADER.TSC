@@ -1,0 +1,14 @@
+      .ORG 0xfff5
+            RWD $3           ;Read in the number of segments
+    NEWSEG  RWD $2           ;Read the starting address of the segment
+            RWD $1           ;Read the number of words in the segment
+    START   RWD $0           ;Read in an instruction word
+            SWD $0, $2, 0    ;Store the word in memory
+            ADI $2, $2, 1    ;Increment the address
+            ADI $1, $1, -1   ;Decrement the number of words
+            BGZ $1, START    ;If more words to read, then branch
+            ADI $3, $3, -1   ;Decrement the number of segments
+            BGZ $3, NEWSEG   ;If more segments, then branch
+            HLT
+     
+            .END

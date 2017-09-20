@@ -1,0 +1,93 @@
+[Project]
+FileName=C:\Bryan's files\Programs\C++\XML\Project1.dev
+Name=XMLGen
+Use_gpp=1
+UnitCount=23
+ResFiles=C:\Bryan's files\Programs\C++\XML\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\DEV-C++\Icon\Window.ico
+ObjFile=
+
+[Unit1]
+FileName=C:\Bryan's files\Programs\C++\XML\main.cpp
+FileTime=680362165
+
+[Unit2]
+FileName=C:\Bryan's files\Programs\C++\XML\occupation.h
+
+[Unit3]
+FileName=C:\Bryan's files\Programs\C++\XML\occupation.cpp
+
+[Unit4]
+FileName=C:\Bryan's files\Programs\C++\XML\marriage.cpp
+FileTime=680359590
+
+[Unit5]
+FileName=C:\Bryan's files\Programs\C++\XML\marriage.h
+FileTime=680360070
+
+[Unit6]
+FileName=C:\Bryan's files\Programs\C++\XML\parents.cpp
+FileTime=680310197
+
+[Unit7]
+FileName=C:\Bryan's files\Programs\C++\XML\parents.h
+
+[Unit8]
+FileName=C:\Bryan's files\Programs\C++\XML\event.cpp
+FileTime=680413682
+
+[Unit9]
+FileName=C:\Bryan's files\Programs\C++\XML\event.h
+FileTime=680354794
+
+[Unit10]
+FileName=C:\Bryan's files\Programs\C++\XML\history.h
+
+[Unit11]
+FileName=C:\Bryan's files\Programs\C++\XML\history.cpp
+FileTime=680357889
+
+[Unit12]
+FileName=C:\Bryan's files\Programs\C++\XML\place.cpp
+FileTime=680358960
+
+[Unit13]
+FileName=C:\Bryan's files\Programs\C++\XML\place.h
+
+[Unit14]
+FileName=C:\Bryan's files\Programs\C++\XML\child.cpp
+
+[Unit15]
+FileName=C:\Bryan's files\Programs\C++\XML\child.h
+
+[Unit16]
+FileName=C:\Bryan's files\Programs\C++\XML\xmltag.cpp
+FileTime=680311426
+
+[Unit17]
+FileName=C:\Bryan's files\Programs\C++\XML\xmltag.h
+
+[Unit18]
+FileName=C:\Bryan's files\Programs\C++\XML\family.cpp
+FileTime=680416074
+
+[Unit19]
+FileName=C:\Bryan's files\Programs\C++\XML\family.h
+FileTime=680413026
+
+[Unit20]
+FileName=C:\Bryan's files\Programs\C++\XML\person.cpp
+FileTime=680415497
+
+[Unit21]
+FileName=C:\Bryan's files\Programs\C++\XML\person.h
+FileTime=680361767
+
+[Unit22]
+FileName=C:\Bryan's files\Programs\C++\cs240p1\CS240.h
+
+[Unit23]
+FileName=C:\Bryan's files\Programs\C++\cs240p1\CS240.cpp
+

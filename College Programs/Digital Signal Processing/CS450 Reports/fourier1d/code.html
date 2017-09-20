@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Source Code</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Source Code</h2></caption>
+<tr><td align="left"><pre><code>
+ private RealSignal computeMag(ComplexSignal c) {
+     double val=0;
+    RealSignal out = new RealSignal(c.length());
+    RealSignal sigReal = c.real();
+    RealSignal sigImage = c.imag();
+    for (int i=0; i&lt;sigReal.length(); i++) {
+        val = Math.pow(sigReal.get(i),2.0) + Math.pow(sigImage.get(i),2.0);
+        val = Math.sqrt(val);
+        out.set(i, (float) val);
+    }
+    return out;
+  }
+   private RealSignal computePhase(ComplexSignal c) {
+     double val=0;
+    RealSignal out = new RealSignal(c.length());
+    RealSignal sigReal = c.real();
+    RealSignal sigImage = c.imag();
+    for (int i=0; i&lt;sigReal.length(); i++) {
+        val = Math.atan2(sigImage.get(i), sigReal.get(i));
+        out.set(i, (float) val);
+    }
+    return out;
+  }
+  private RealSignal computePowerSpectrum(RealSignal sigReal, RealSignal sigImag) {
+     double val=0;
+    RealSignal out = new RealSignal(sigReal.length());
+    for (int i=0; i&lt;sigReal.length(); i++) {
+        val = Math.pow(sigReal.get(i),2.0) + Math.pow(sigImag.get(i),2.0);
+        out.set(i, (float) val);
+    }
+    return out;
+  }
+  private RealSignal discoverTransfer(ComplexSignal cg1, ComplexSignal cg2) {
+    RealSignal r=null;
+    ComplexSignal cgout = new ComplexSignal(cg1.length());
+    float valReal=0;
+    float valImag=0;
+    try {
+        for (int i=0;i&lt;cg1.length(); i++) {
+            if (cg1.getReal(i) == 0) valReal=0;
+            else valReal = (cg2.getReal(i)/cg1.getReal(i));
+            if (cg1.getImag(i) == 0) valImag=0;
+            else valImag = (cg2.getImag(i)/cg1.getImag(i));
+            cgout.set(i, valReal, valImag);
+        }
+        r = (performInverseTransform(cgout)).real();
+        writeToFile(r, "c:\\bryan\\programs\\java\\fourier transforms\\impulse.dat");
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+        r = null;
+    }
+    return r;
+  }
+  private ComplexSignal performInverseTransform(ComplexSignal csg) {
+    FFT op = new FFT();
+    try {
+        return op.doFFT(csg, false);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+    return null;
+  }
+  private ComplexSignal performTransform() {
+    ComplexSignal out;
+    RealSignal r;
+    String file = ImageFileBrowse();
+    r = (RealSignal) readFromFile(file);
+    FFT op = new FFT();
+    try {
+        out = op.doFFT(r,true);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+        return null;
+    }
+    return out;
+  }
+  private void proveConvolution() {
+    RealSignal kern, mainSig, outReal;
+    ComplexSignal ckern, cMainSig, out;
+    kern = (RealSignal) readFromFile();
+    mainSig = (RealSignal) readFromFile();
+    try {
+        SignalKernel k = new SignalKernel(kern);
+        Convolve c = new Convolve(k);
+        writeToFile(c.apply(mainSig), "c:\\bryan\\programs\\java\\fourier transforms\\Dconvolve.dat");
+        FFT op = new FFT();
+        ckern = op.doFFT(kern, true);
+        cMainSig = op.doFFT(mainSig, true);
+        cMainSig.multiply(ckern);
+        out = op.doFFT(cMainSig, false);
+        outReal = out.real();
+        writeToFile((RealSignal) (new Shift(outReal.length()/2, Shift.WRAP)).apply(outReal),"c:\\bryan\\programs\\java\\fourier transforms\\Dinverse.dat");
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+      
+  }
+  private RealSignal generateSine(int freq, int length) {
+    RealSignal val = new RealSignal(length);
+    double calc = 0;
+    for (int i=0; i&lt;length; i++) {
+        calc =  Math.sin(2 * Math.PI * freq * (((double)i)/((double)length)));
+        val.set(i, (float)calc);
+    }
+    return val;
+  }
+  private RealSignal generateCosine(int freq, int length) {
+    RealSignal val = new RealSignal(length);
+    double calc = 0;
+    for (int i=0; i&lt;length; i++) {
+        calc =  Math.cos(2 * Math.PI * freq * (((double)i)/((double)length)));
+        val.set(i, (float) calc);
+    }
+    return val;
+  }
+
+</code></pre></tr>
+</table>
+
+
+
+</body>
+</html>

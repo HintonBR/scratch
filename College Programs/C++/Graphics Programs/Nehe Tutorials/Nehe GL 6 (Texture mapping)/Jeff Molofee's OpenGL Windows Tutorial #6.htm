@@ -1,0 +1,1049 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0046)http://nehe.gamedev.net/tutorials/lesson06.asp -->
+<HTML><HEAD><TITLE>Jeff Molofee's OpenGL Windows Tutorial #6</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<STYLE type=text/css>A:link {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ffccaa; TEXT-DECORATION: none
+}
+</STYLE>
+
+<META content="MSHTML 5.50.4616.200" name=GENERATOR></HEAD>
+<BODY text=#ffffff bgColor=#000000>
+<CENTER><!-- Begin Ban Man Pro Banner Code -  Zone: NeHe -->
+<SCRIPT language=JAVASCRIPT>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE6&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<S'+'CRIPT src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE4">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<A HREF="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Click&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" target="_new"><IMG SRC="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" width="468" height="60" border="0"></A>'); } }
+if (browName=='Microsoft Internet Explorer')
+     { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A target=_new 
+href="http://www.gamedev.net/banman/banman.asp?ZoneID=4&amp;Task=Click&amp;Mode=HTML&amp;PageID=70554"><IMG 
+height=60 src="Jeff Molofee's OpenGL Windows Tutorial #6_files/media1163.gif" 
+width=468 border=0></A> </NOSCRIPT><!-- End Ban Man Pro Banner Code -  Zone: NeHe --></CENTER><BR><BR><!-- NeHe Logo -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=326 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/logo.png" 
+    height=130>&nbsp;</TD>
+    <TD vAlign=center align=middle width="100%"><FONT color=#ffccaa 
+      size=+3><B><I>Lesson 6</I></B></FONT></TD></TR></TBODY></TABLE><!-- Top Border - Joins With Logo (298) -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Learning how to texture map has 
+      many benefits. Lets say you wanted a missile to fly across the screen. Up 
+      until this tutorial we'd probably make the entire missile out of polygons, 
+      and fancy colors. With texture mapping, you can take a real picture of a 
+      missile and make the picture fly across the screen. Which do you think 
+      will look better? A photograph or an object made up of triangles and 
+      squares? By using texture mapping, not only will it look better, but your 
+      program will run faster. The texture mapped missile would only be one quad 
+      moving across the screen. A missile made out of polygons could be made up 
+      of hundreds or thousands of polygons. The single texture mapped quad will 
+      use alot less processing power. <BR><BR>Lets start off by adding five new 
+      lines of code to the top of lesson one. The first new line is #include 
+      &lt;stdio.h&gt;. Adding this header file allows us to work with files. In 
+      order to use fopen() later in the code we need to include this line. Then 
+      we add three new floating point variables... xrot, yrot and zrot. These 
+      variables will be used to rotate the cube on the x axis, the y axis, and 
+      the z axis. The last line GLuint texture[1] sets aside storage space for 
+      one texture. If you wanted to load in more than one texture, you would 
+      change the number one to the number of textures you wish to load. 
+    </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>#include &lt;windows.h&gt;								<FONT color=#ffffaa>// Header File For Windows</FONT>
+#include &lt;stdio.h&gt;								<FONT color=#ffffaa>// Header File For Standard Input/Output </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+#include &lt;gl\gl.h&gt;								<FONT color=#ffffaa>// Header File For The OpenGL32 Library</FONT>
+#include &lt;gl\glu.h&gt;								<FONT color=#ffffaa>// Header File For The GLu32 Library</FONT>
+#include &lt;gl\glaux.h&gt;								<FONT color=#ffffaa>// Header File For The GLaux Library</FONT>
+
+HDC		hDC=NULL;							<FONT color=#ffffaa>// Private GDI Device Context</FONT>
+HGLRC		hRC=NULL;							<FONT color=#ffffaa>// Permanent Rendering Context</FONT>
+HWND		hWnd=NULL;							<FONT color=#ffffaa>// Holds Our Window Handle</FONT>
+HINSTANCE	hInstance;							<FONT color=#ffffaa>// Holds The Instance Of The Application</FONT>
+
+bool	keys[256];								<FONT color=#ffffaa>// Array Used For The Keyboard Routine</FONT>
+bool	active=TRUE;								<FONT color=#ffffaa>// Window Active Flag</FONT>
+bool	fullscreen=TRUE;							<FONT color=#ffffaa>// Fullscreen Flag</FONT>
+
+GLfloat	xrot;									<FONT color=#ffffaa>// X Rotation </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+GLfloat	yrot;									<FONT color=#ffffaa>// Y Rotation </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+GLfloat	zrot;									<FONT color=#ffffaa>// Z Rotation </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+
+GLuint	texture[1];								<FONT color=#ffffaa>// Storage For One Texture </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+
+LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);				<FONT color=#ffffaa>// Declaration For WndProc</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now immediately after the above 
+      code, and before ReSizeGLScene(), we want to add the following section of 
+      code. The job of this code is to load in a bitmap file. If the file 
+      doesn't exist NULL is sent back meaning the texture couldn't be loaded. 
+      Before I start explaining the code there are a few VERY important things 
+      you need to know about the images you plan to use as textures. The image 
+      height and width MUST be a power of 2. The width and height must be at 
+      least 64 pixels, and for compatability reasons, shouldn't be more than 256 
+      pixels. If the image you want to use is not 64, 128 or 256 pixels on the 
+      width or height, resize it in an art program. There are ways around this 
+      limitation, but for now we'll just stick to standard texture sizes. 
+      <BR><BR>First thing we do is create a file handle. A handle is a value 
+      used to identify a resource so that our program can access it. We set the 
+      handle to NULL to start off. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>AUX_RGBImageRec *LoadBMP(char *Filename)					<FONT color=#ffffaa>// Loads A Bitmap Image</FONT>
+{
+	FILE *File=NULL;							<FONT color=#ffffaa>// File Handle</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Next we check to make sure that a 
+      filename was actually given. The person may have use LoadBMP() without 
+      specifying the file to load, so we have to check for this. We don't want 
+      to try loading nothing :) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	if (!Filename)								<FONT color=#ffffaa>// Make Sure A Filename Was Given</FONT>
+	{
+		return NULL;							<FONT color=#ffffaa>// If Not Return NULL</FONT>
+	}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">If a filename was given, we check 
+      to see if the file exists. The line below tries to open the file. 
+    </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	File=fopen(Filename,"r");						<FONT color=#ffffaa>// Check To See If The File Exists</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">If we were able to open the file 
+      it obviously exists. We close the file with fclose(File) then we return 
+      the image data. auxDIBImageLoad(Filename) reads in the data. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	if (File)								<FONT color=#ffffaa>// Does The File Exist?</FONT>
+	{
+		fclose(File);							<FONT color=#ffffaa>// Close The Handle</FONT>
+		return auxDIBImageLoad(Filename);				<FONT color=#ffffaa>// Load The Bitmap And Return A Pointer</FONT>
+	}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">If we were unable to open the file 
+      we'll return NULL. which means the file couldn't be loaded. Later on in 
+      the program we'll check to see if the file was loaded. If it wasn't we'll 
+      quit the program with an error message. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	return NULL;								<FONT color=#ffffaa>// If Load Failed Return NULL</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">This is the section of code that 
+      loads the bitmap (calling the code above) and converts it into a texture. 
+      </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>int LoadGLTextures()								<FONT color=#ffffaa>// Load Bitmaps And Convert To Textures</FONT>
+{
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">We'll set up a variable called 
+      <B>Status</B>. We'll use this variable to keep track of whether or not we 
+      were able to load the bitmap and build a texture. We set Status to FALSE 
+      (meaning nothing has been loaded or built) by default. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	int Status=FALSE;							<FONT color=#ffffaa>// Status Indicator</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we create an image record that 
+      we can store our bitmap in. The record will hold the bitmap width, height, 
+      and data. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	AUX_RGBImageRec *TextureImage[1];					<FONT color=#ffffaa>// Create Storage Space For The Texture</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">We clear the image record just to 
+      make sure it's empty. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	memset(TextureImage,0,sizeof(void *)*1);				<FONT color=#ffffaa>// Set The Pointer To NULL</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we load the bitmap and convert 
+      it to a texture. TextureImage[0]=LoadBMP("Data/NeHe.bmp") will jump to our 
+      LoadBMP() code. The file named NeHe.bmp in the Data directory will be 
+      loaded. If everything goes well, the image data is stored in 
+      TextureImage[0], <B>Status</B> is set to TRUE, and we start to build our 
+      texture. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	<FONT color=#ffffaa>// Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit</FONT>
+	if (TextureImage[0]=LoadBMP("Data/NeHe.bmp"))
+	{
+		Status=TRUE;							<FONT color=#ffffaa>// Set The Status To TRUE</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now that we've loaded the image 
+      data into TextureImage[0], we will build a texture using this data. The 
+      first line glGenTextures(1, &amp;texture[0]) tells OpenGL we want to 
+      generate one texture name (increase the number if you load more than one 
+      texture). Remember at the very beginning of this tutorial we created room 
+      for one texture with the line GLuint <B>texture[1]</B>. Although you'd 
+      think the first texture would be stored at &amp;texture[1] instead of 
+      &amp;texture[0], it's not. The first actual storage area is 0. If we 
+      wanted two textures we would use GLuint texture[2] and the second texture 
+      would be stored at texture[1]. <BR><BR>The second line 
+      glBindTexture(GL_TEXTURE_2D, texture[0]) tells OpenGL to bind the named 
+      texture texture[0] to a texture target. 2D textures have both height (on 
+      the Y axes) and width (on the X axes). The main function of glBindTexture 
+      is to assign a texture name to texture data. In this case we're telling 
+      OpenGL there is memory available at &amp;texture[0]. When we create the 
+      texture, it will be stored in the memory that &amp;texture[0] references. 
+      </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glGenTextures(1, &amp;texture[0]);					<FONT color=#ffffaa>// Create The Texture</FONT>
+
+		<FONT color=#ffffaa>// Typical Texture Generation Using Data From The Bitmap</FONT>
+		glBindTexture(GL_TEXTURE_2D, texture[0]);
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Next we create the actual texture. 
+      The following line tells OpenGL the texture will be a 2D texture 
+      (GL_TEXTURE_2D). Zero represents the images level of detail, this is 
+      usually left at zero. Three is the number of data components. Because the 
+      image is made up of red data, green data and blue data, there are three 
+      components. TextureImage[0]-&gt;sizeX is the width of the texture. If you 
+      know the width, you can put it here, but it's easier to let the computer 
+      figure it out for you. TextureImage[0]-&gt;sizey is the height of the 
+      texture. zero is the border. It's usually left at zero. GL_RGB tells 
+      OpenGL the image data we are using is made up of red, green and blue data 
+      in that order. GL_UNSIGNED_BYTE means the data that makes up the image is 
+      made up of unsigned bytes, and finally... TextureImage[0]-&gt;data tells 
+      OpenGL where to get the texture data from. In this case it points to the 
+      data stored in the TextureImage[0] record. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		<FONT color=#ffffaa>// Generate The Texture</FONT>
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]-&gt;sizeX, TextureImage[0]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]-&gt;data);
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">The next two lines tell OpenGL 
+      what type of filtering to use when the image is larger 
+      (GL_TEXTURE_MAG_FILTER) or stretched on the screen than the original 
+      texture, or when it's smaller (GL_TEXTURE_MIN_FILTER) on the screen than 
+      the actual texture. I usually use GL_LINEAR for both. This makes the 
+      texture look smooth way in the distance, and when it's up close to the 
+      screen. Using GL_LINEAR requires alot of work from the processor/video 
+      card, so if your system is slow, you might want to use GL_NEAREST. A 
+      texture that's filtered with GL_NEAREST will appear blocky when it's 
+      stretched. You can also try a combination of both. Make it filter things 
+      up close, but not things in the distance. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	<FONT color=#ffffaa>// Linear Filtering</FONT>
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);	<FONT color=#ffffaa>// Linear Filtering</FONT>
+	}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we free up any ram that we may 
+      have used to store the bitmap data. We check to see if the bitmap data was 
+      stored in TextureImage[0]. If it was we check to see if the data has been 
+      stored. If data was stored, we erase it. Then we free the image structure 
+      making sure any used memory is freed up. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	if (TextureImage[0])							<FONT color=#ffffaa>// If Texture Exists</FONT>
+	{
+		if (TextureImage[0]-&gt;data)					<FONT color=#ffffaa>// If Texture Image Exists</FONT>
+		{
+			free(TextureImage[0]-&gt;data);				<FONT color=#ffffaa>// Free The Texture Image Memory</FONT>
+		}
+
+		free(TextureImage[0]);						<FONT color=#ffffaa>// Free The Image Structure</FONT>
+	}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Finally we return the status. If 
+      everything went OK, the variable <B>Status</B> will be TRUE. If anything 
+      went wrong, <B>Status</B> will be FALSE. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	return Status;								<FONT color=#ffffaa>// Return The Status</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">I've added a few lines of code to 
+      InitGL. I'll repost the entire section of code, so it's easy to see the 
+      lines that I've added, and where they go in the code. The first line if 
+      (!LoadGLTextures()) jumps to the routine above which loads the bitmap and 
+      makes a texture from it. If LoadGLTextures() fails for any reason, the 
+      next line of code will return FALSE. If everything went OK, and the 
+      texture was created, we enable 2D texture mapping. If you forget to enable 
+      texture mapping your object will usually appear solid white, which is 
+      definitely not good. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>int InitGL(GLvoid)								<FONT color=#ffffaa>// All Setup For OpenGL Goes Here</FONT>
+{
+	if (!LoadGLTextures())							<FONT color=#ffffaa>// Jump To Texture Loading Routine </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+	{
+		return FALSE;							<FONT color=#ffffaa>// If Texture Didn't Load Return FALSE </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+	}
+
+	glEnable(GL_TEXTURE_2D);						<FONT color=#ffffaa>// Enable Texture Mapping </FONT><FONT color=#ffaaaa>( NEW )</FONT>
+	glShadeModel(GL_SMOOTH);						<FONT color=#ffffaa>// Enable Smooth Shading</FONT>
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);					<FONT color=#ffffaa>// Black Background</FONT>
+	glClearDepth(1.0f);							<FONT color=#ffffaa>// Depth Buffer Setup</FONT>
+	glEnable(GL_DEPTH_TEST);						<FONT color=#ffffaa>// Enables Depth Testing</FONT>
+	glDepthFunc(GL_LEQUAL);							<FONT color=#ffffaa>// The Type Of Depth Testing To Do</FONT>
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			<FONT color=#ffffaa>// Really Nice Perspective Calculations</FONT>
+	return TRUE;								<FONT color=#ffffaa>// Initialization Went OK</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we draw the textured cube. You 
+      can replace the DrawGLScene code with the code below, or you can add the 
+      new code to the original lesson one code. This section will be heavily 
+      commented so it's easy to understand. The first two lines of code 
+      glClear() and glLoadIdentity() are in the original lesson one code. 
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) will clear the screen 
+      to the color we selected in InitGL(). In this case, the screen will be 
+      cleared to black. The depth buffer will also be cleared. The view will 
+      then be reset with glLoadIdentity(). </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>int DrawGLScene(GLvoid)								<FONT color=#ffffaa>// Here's Where We Do All The Drawing</FONT>
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);			<FONT color=#ffffaa>// Clear Screen And Depth Buffer</FONT>
+	glLoadIdentity();							<FONT color=#ffffaa>// Reset The Current Matrix</FONT>
+	glTranslatef(0.0f,0.0f,-5.0f);						<FONT color=#ffffaa>// Move Into The Screen 5 Units</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">The following three lines of code 
+      will rotate the cube on the x axis, then the y axis, and finally the z 
+      axis. How much it rotates on each axis will depend on the value stored in 
+      xrot, yrot and zrot. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glRotatef(xrot,1.0f,0.0f,0.0f);						<FONT color=#ffffaa>// Rotate On The X Axis</FONT>
+	glRotatef(yrot,0.0f,1.0f,0.0f);						<FONT color=#ffffaa>// Rotate On The Y Axis</FONT>
+	glRotatef(zrot,0.0f,0.0f,1.0f);						<FONT color=#ffffaa>// Rotate On The Z Axis</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">The next line of code selects 
+      which texture we want to use. If there was more than one texture you 
+      wanted to use in your scene, you would select the texture using 
+      glBindTexture(GL_TEXTURE_2D, texture[<I>number of texture to use</I>]). If 
+      you wanted to change textures, you would bind to the new texture. One 
+      thing to note is that you can NOT bind a texture inside glBegin() and 
+      glEnd(), you have to do it before or after glBegin(). Notice how we use 
+      glBindTextures to specify which texture to create and to select a specific 
+      texture. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glBindTexture(GL_TEXTURE_2D, texture[0]);				<FONT color=#ffffaa>// Select Our Texture</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">To properly map a texture onto a 
+      quad, you have to make sure the top right of the texture is mapped to the 
+      top right of the quad. The top left of the texture is mapped to the top 
+      left of the quad, the bottom right of the texture is mapped to the bottom 
+      right of the quad, and finally, the bottom left of the texture is mapped 
+      to the bottom left of the quad. If the corners of the texture do not match 
+      the same corners of the quad, the image may appear upside down, sideways, 
+      or not at all. <BR><BR>The first value of glTexCoord2f is the X 
+      coordinate. 0.0f is the left side of the texture. 0.5f is the middle of 
+      the texture, and 1.0f is the right side of the texture. The second value 
+      of glTexCoord2f is the Y coordinate. 0.0f is the bottom of the texture. 
+      0.5f is the middle of the texture, and 1.0f is the top of the texture. 
+      <BR><BR>So now we know the top left coordinate of a texture is 0.0f on X 
+      and 1.0f on Y, and the top left vertex of a quad is -1.0f on X, and 1.0f 
+      on Y. Now all you have to do is match the other three texture coordinates 
+      up with the remaining three corners of the quad. <BR><BR>Try playing 
+      around with the x and y values of glTexCoord2f. Changing 1.0f to 0.5f will 
+      only draw the left half of a texture from 0.0f (left) to 0.5f (middle of 
+      the texture). Changing 0.0f to 0.5f will only draw the right half of a 
+      texture from 0.5f (middle) to 1.0f (right). </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glBegin(GL_QUADS);
+		<FONT color=#ffffaa>// Front Face</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+		<FONT color=#ffffaa>// Back Face</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		<FONT color=#ffffaa>// Top Face</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		<FONT color=#ffffaa>// Bottom Face</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		<FONT color=#ffffaa>// Right face</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		<FONT color=#ffffaa>// Left Face</FONT>
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);	<FONT color=#ffffaa>// Bottom Left Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);	<FONT color=#ffffaa>// Bottom Right Of The Texture and Quad</FONT>
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);	<FONT color=#ffffaa>// Top Right Of The Texture and Quad</FONT>
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);	<FONT color=#ffffaa>// Top Left Of The Texture and Quad</FONT>
+	glEnd();
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we increase the value of xrot, 
+      yrot and zrot. Try changing the number each variable increases by to make 
+      the cube spin faster or slower, or try changing a + to a - to make the 
+      cube spin the other direction. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	xrot+=0.3f;								<FONT color=#ffffaa>// X Axis Rotation</FONT>
+	yrot+=0.2f;								<FONT color=#ffffaa>// Y Axis Rotation</FONT>
+	zrot+=0.4f;								<FONT color=#ffffaa>// Z Axis Rotation</FONT>
+	return true;								<FONT color=#ffffaa>// Keep Going</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">You should now have a better 
+      understanding of texture mapping. You should be able to texture map the 
+      surface of any quad with an image of your choice. Once you feel confident 
+      with your understanding of 2D texture mapping, try adding six different 
+      textures to the cube. <BR><BR>Texture mapping isn't to difficult to 
+      understand once you understand texture coordinates. If you're having 
+      problems understanding any part of this tutorial, let me know. Either I'll 
+      rewrite that section of the tutorial, or I'll reply back to you in email. 
+      Have fun creating texture mapped scenes of your own :) <BR><BR><FONT 
+      color=#aaccff><B>Jeff Molofee</B> (<B>NeHe</B>)</FONT> <BR><BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/vc/lesson06.zip">Visual C++</A> 
+      Code For This Lesson.<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/openil/lesson06.zip">Visual C++ / 
+      OpenIL</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:doomwiz@ticnet.com">Denton Woods</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vb/lesson06.zip">Visual Basic</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:rosscogl@email.com">Ross Dawson</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vb/lesson06-2.zip">Visual 
+      Basic</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:pdetagyos@home.com">Peter De Tagyos</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/glut/lesson06.zip">GLUT</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lordrustad@hotmail.com">Andy Restad</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cygwin/lesson06.tar.gz">Cygwin (<A 
+      href="http://www.cygwin.com/">FREE Language</A>)</A> Code For This Lesson. 
+      ( Conversion by <A href="mailto:stephan@lazyfellow.com">Stephan 
+      Ferraro</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/macosx/lesson06.sit.bin">MacOS 
+      X/GLUT</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:unreality@mac.com">Raal Goff</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linuxglx/lesson06.tar.gz">Linux/GLX</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vfortran/lesson06.zip">Visual 
+      Fortran</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/masm/lesson06.zip">MASM</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:scalp@bigfoot.com">Nico 
+      (Scalp)</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/delphi/lesson06.zip">Delphi</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:brad@choate.net">Brad Choate</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linux/lesson06.tar.gz">Linux</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:ulmont@bellsouth.net">Richard Campbell</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/irix/lesson06.zip">Irix</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A 
+      href="http://nehe.gamedev.net/tutorials/solaris/lesson06.zip">Solaris</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/mac/lesson06.sit">Mac OS</A> 
+      Code For This Lesson. ( Conversion by <A href="mailto:asp@usc.edu">Anthony 
+      Parker</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/pbasic/lesson06.zip">Power 
+      Basic</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:anguslaw@net.ntl.com">Angus Law</A> )<BR>* DOWNLOAD <A 
+      target=_blank 
+      href="http://www.ngent.com/staff/chrish/opengl/index.html">BeOS</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:chrish@ngent.com">Chris 
+      Herborth</A> )<BR>* DOWNLOAD <A target=_blank 
+      href="http://dev.knowledgeassociates.com/hodglim/nehe/nehe.shtml">Java</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Hodglim@hotmail.com">Darren Hodges</A> )<BR>* DOWNLOAD <A 
+      href="http://sites.netscape.net/zaqhaq/">MingW32 &amp; Allegro</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:zaqhaq@netscape.net">Peter Puck</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cbuilder/lesson06.zip">Borland C++ 
+      Builder 4.0</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:psalmons@helios.acomp.usf.edu">Patrick Salmons</A> )<BR>* 
+      DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/python/lesson06.tar.gz">Python</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:hakuin@voicenet.com">John Ferguson</A> ) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Divider -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/Lc.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/c.png" 
+      height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/Rc.png" 
+    height=28>&nbsp;</TD></TR><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms"><BR>
+      <CENTER><A target=_top href="http://nehe.gamedev.net/"><B><FONT 
+      size=+1>Back To NeHe Productions!</FONT></B></A></CENTER></FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/r.png" 
+      height=28>&nbsp;</TD></TR>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #6_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><BR><BR>
+<CENTER><!-- --></CENTER></BODY></HTML>

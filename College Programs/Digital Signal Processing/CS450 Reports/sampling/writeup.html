@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr>
+	<td align="center"><big><strong>Sampling</strong></big></td>
+</tr>
+<tr>
+	<td align="left">We simulate the sampling process by taking the input image and convolving by either and ideal low-pass filter or a gaussian (depends on if artifacts that are produced by the low-pass filter).
+	The convolving represents filtering out the high frequencies in the frequency domain that would be overlapping when we sampled the image (frequencies higher than 8) and cause distortion in the new sampled image.
+	We then simulate multiplying by a comb in the spatial domain by looping through the image and selecting every eighth pixel in x on every eighth row in y.</td>
+</tr> 
+<tr>
+	<td align="left" valign="top"><img src="TandLsmall.jpg" width="700" height="700" alt="" border="0"></td>
+</tr>
+<tr>
+	<td align="left" valign="top"><img src="image2.jpg" width="700" height="700" alt="" border="0"></td>
+</tr>
+<tr>
+	<td align="left" valign="top"><img src="image4.jpg" width="700" height="700" alt="" border="0"></td>
+</tr>
+</table>
+<br><br>
+<table border="5" bordercolor="#008040" align="center">
+<tr>
+	<td align="center"><big><strong>Deconvolution</strong></big></td>
+</tr>
+<tr>
+	<td align="left">In order to remove the blurring and sharpen the image I had to use a Gaussian which had a
+	standard deviation of around .7 in the frequency domain or one of about 1.4 in the spatial domain.
+	If it was too low the image would get to dark to see and if it was too high the image looked almost like nothing had
+	happened.  With the second image which had noise add to it the noise was accentuated when I tried to deconvolve the image and so while the
+	image was a little sharper the noise effect was enhanced.  Although I did not see much of a difference by convolving the original image (map_new3) a little more
+	than it had been and thus removing the impact that the noise had on the overall image and then deconvolving by the same factor Gaussian as I did with map_new2 I should have
+	seen an image that while having less artifacts due to the noise was not as clear as the deconvolved image map_new2.  This is because as we convolve an image we remove the overall effect that noise has on it but 
+	at the same time we blur the image more (thus More Blur - Less Noise, Sharper Image, More effect from Noise).   </td>
+</tr>
+<tr>
+	<td align="left" valign="top"><img src="sampling1.jpg" width="932" height="700" alt="" border="0"></td>
+</tr>
+<tr>
+	<td align="left" valign="top"><img src="sampling2.jpg" width="1030" height="700" alt="" border="0"></td>
+</tr>
+</table>
+</body>
+</html>

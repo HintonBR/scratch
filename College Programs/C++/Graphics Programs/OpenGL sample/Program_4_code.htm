@@ -1,0 +1,1165 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./Program%204%20code_files/filelist.xml">
+<title>#include &lt;glut</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Parris K. Egbert</o:Author>
+  <o:LastAuthor>Parris K. Egbert</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-05-03T17:14:00Z</o:Created>
+  <o:LastSaved>2001-05-03T17:14:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>1538</o:Words>
+  <o:Characters>8771</o:Characters>
+  <o:Lines>73</o:Lines>
+  <o:Paragraphs>17</o:Paragraphs>
+  <o:CharactersWithSpaces>10771</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body bgcolor=white lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>#include &lt;glut.h&gt;<o:p></o:p></p>
+
+<p class=MsoNormal>/*#include &lt;gl/gl.h&gt; */<o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;math.h&gt;<o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;<o:p></o:p></p>
+
+<p class=MsoNormal>#define TRUE 1<o:p></o:p></p>
+
+<p class=MsoNormal>#define FALSE 0<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#define PI 3.1415926535<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>static int old_x, old_y;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat trans_z = -40.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat trans_y = 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat trans_x = 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat rot_y = 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat rot_x = 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat rot_z = 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat scale_x = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat scale_y = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat scale_z = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>GLboolean XY<span style="mso-spacerun: yes">    </span>=
+TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal>GLboolean DEPTH = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal>GLboolean CULL<span style="mso-spacerun: yes">  </span>=
+FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal>GLboolean SCALEX = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal>GLboolean LIGHTING = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>/* Prototypes */<o:p></o:p></p>
+
+<p class=MsoNormal>void doSquare(void);<o:p></o:p></p>
+
+<p class=MsoNormal>void doCube(void);<o:p></o:p></p>
+
+<p class=MsoNormal>void checkDepth(void);<o:p></o:p></p>
+
+<p class=MsoNormal>void checkCulling(void);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>/*////////////////////////////////////////////////////////////////////////////*/<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>static GLint
+v[24]=<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>-5,<span style="mso-spacerun: yes">  </span>5,<span style="mso-spacerun:
+yes">  </span>5,<span style="mso-spacerun: yes">     </span>/*/ 0 */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">      </span><span
+style="mso-spacerun: yes">           </span>5,<span style="mso-spacerun: yes"> 
+</span>5,<span style="mso-spacerun: yes">  </span>5,<span style="mso-spacerun:
+yes">     </span>/*/ 1*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                 </span>5,
+-5,<span style="mso-spacerun: yes">  </span>5,<span style="mso-spacerun:
+yes">     </span>/*/ 2*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>-5,
+-5,<span style="mso-spacerun: yes">  </span>5,<span style="mso-spacerun:
+yes">     </span>/*/ 3*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>-5,
+-5, -5,<span style="mso-spacerun: yes">     </span>/*/ 4*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>-5,<span style="mso-spacerun: yes">  </span>5, -5,<span
+style="mso-spacerun: yes">     </span>/*/ 5*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                
+</span>5,<span style="mso-spacerun: yes">  </span>5, -5,<span
+style="mso-spacerun: yes">     </span>/*/ 6*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                 </span>5,
+-5, -5,<span style="mso-spacerun: yes">     </span>/*/ 7*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>};<span
+style="mso-spacerun: yes">      </span>/*/ end v*/<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>static
+GLfloat colors[6][3]=<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{1.0,
+0.0, 0.0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{0.0,
+1.0, 0.0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{0.0,
+0.0, 1.0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{0.0,
+1.0, 1.0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{1.0,
+0.0, 1.0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{1.0,
+1.0, 0.0}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>};<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>static GLuint
+indices[24] =<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>0, 1,
+2, 3, /*/f*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>1, 6,
+7, 2, /*/l*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>5, 0,
+3, 4, /*/r*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>5, 6,
+1, 0, /*/t*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>3, 2,
+7, 4, /*/b*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>6, 5,
+4, 7<span style="mso-spacerun: yes">  </span>/*/bk*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>};<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>static
+GLfloat norms[6][3]=<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>{0,<span style="mso-spacerun: yes">  </span>0,<span style="mso-spacerun:
+yes">  </span>1},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{1,
+0,<span style="mso-spacerun: yes">  </span>0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>{-1,<span style="mso-spacerun: yes">  </span>0,<span
+style="mso-spacerun: yes">  </span>0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>{0,<span style="mso-spacerun: yes">  </span>1,<span style="mso-spacerun:
+yes">  </span>0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">           </span><span
+style="mso-spacerun: yes">     </span>{0, -1,<span style="mso-spacerun: yes"> 
+</span>0},<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>{0,<span style="mso-spacerun: yes">  </span>0, -1}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>};<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void doCube(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>int count =
+0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>int col = 0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>int norm = 0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>/*/glDrawElements (GL_QUADS, 24, GL_UNSIGNED_INT, indices);<span
+style="mso-spacerun: yes">     </span>// i think this ignores color arrays ?<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>//glDrawArrays (GL_QUADS, 0, 3);<span style="mso-spacerun: yes">       
+</span>// haven't got a clue as to why ? */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glBegin(GL_QUADS);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>for (count =
+0; count &lt; 24; count++)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>col =
+(int)floor(count/4);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>norm
+= (int)floor(count/4);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glNormal3fv (norms[norm]);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glColor3fv (colors[col]);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glArrayElement (indices[count]);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glEnd();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void doSquare(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glBegin(GL_POLYGON);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glVertex2f(-5.0, 5.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glVertex2f(5.0, 5.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glVertex2f(5.0, -5.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glVertex2f(-5.0, -5.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glEnd();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>GLfloat position[] = { 0.0, 0.0, -1.0, 1.0 };<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void init(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glShadeModel(GL_SMOOTH);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glClearColor(0.0, 0.0, 0.0, 1.0);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>/*/ SetUp the
+lighting conditions */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glLightfv(GL_LIGHT0, GL_POSITION, position);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glEnable(GL_LIGHTING);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glEnable(GL_LIGHT0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>GLfloat mat[3] = { 0.9, 0.2, 0.2 };<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*/glMaterialfv(GL_FRONT, GL_AMBIENT, mat);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>//mat[0] = 0.7; mat[1] = 0.7; mat[2] = 0.7;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>//glMaterialfv(GL_FRONT, GL_DIFFUSE, mat); */<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>mat[0]
+= 1.0; mat[1] = 1.0; mat[2] = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glMaterialfv(GL_FRONT, GL_SPECULAR, mat);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glMaterialf(GL_FRONT, GL_SHININESS, 128.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glEnable(GL_COLOR_MATERIAL);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glColorMaterial(GL_FRONT, GL_DIFFUSE);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span><span
+style="mso-spacerun: yes">    </span>glEnableClientState(GL_VERTEX_ARRAY);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>/*/glEnableClientState(GL_COLOR_ARRAY);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>//glEnableClientState(GL_NORMAL_ARRAY);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>//glNormalPointer(GL_INT, 3, norms); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glVertexPointer(3, GL_INT, 0, v);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>/*/glColorPointer(3, GL_UNSIGNED_BYTE, 0, colors);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>//glColorPointer(3, GL_FLOAT, 0, colors); */<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void checkDepth(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (DEPTH)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glEnable(GL_DEPTH_TEST);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(!DEPTH)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glDisable(GL_DEPTH_TEST);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void checkLighting(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (LIGHTING)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glEnable(GL_LIGHTING);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(!LIGHTING)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glDisable(GL_LIGHTING);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void checkCulling(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (CULL)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glEnable(GL_CULL_FACE);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*/glCullFace(GL_BACK); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glCullFace(GL_FRONT);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glFrontFace(GL_CCW);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(!CULL)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glDisable(GL_CULL_FACE);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void rotate (int rotX, int rotY)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (XY)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glRotatef(rotX, 1.0, 0.0, 0.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glRotatef(rotY, 0.0, 1.0, 0.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else <o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glRotatef(rotY, 0.0, 1.0, 0.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glRotatef(rotX, 1.0, 0.0, 0.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void scaling (float scalingX, float scalingY)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (SCALEX)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glScalef (scale_x, 1.0, 1.0);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(!SCALEX)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">           </span><span
+style="mso-spacerun: yes">     </span>glScalef (1.0, scale_y, 1.0);<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void display(void)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glLoadIdentity();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>checkDepth();<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>checkCulling();<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>checkLighting();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glColor3f(1.0, 1.0, 1.0);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glPushMatrix();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glTranslatef(0.0, 0.0, trans_z);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>rotate (rot_x, rot_y);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*/scaling (scale_x, scale_y);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>//doSquare(); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>doCube();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glPopMatrix();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutSwapBuffers();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void reshape(int width, int height)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>GLfloat
+aspect = width/height;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>GLfloat left;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>GLfloat
+right;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>GLfloat top;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>GLfloat
+bottom;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glViewport(0,
+0, width, height);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glMatrixMode(GL_PROJECTION);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glLoadIdentity();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>right =
+(width/100)/2;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>left =
+-right;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>top =
+(height/100)/2;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>bottom =
+-top;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glFrustum(left, right, bottom, top, 10.0, 100.0);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>glMatrixMode(GL_MODELVIEW);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glLoadIdentity();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void motion(int x, int y)<o:p></o:p></p>
+
+<p class=MsoNormal>{<span style="mso-spacerun: yes">       </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>trans_z +=
+(old_y - y);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_y = y;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (trans_z
+&lt;= -99.0)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>trans_z = -99.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(trans_z &gt;= -10.0)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>trans_z = -10.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void rotation(int x, int y)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>rot_x +=
+(old_y - y);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_y = y;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (rot_x
+&gt;= 360)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>rot_x
+-= 360.0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>rot_y +=
+(old_x - x);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_x = x;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (rot_y
+&gt;= 360)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>rot_y
+-= 360.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void scale(int x, int y)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>scale_x +=
+(old_y - y);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_y = y;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (scale_x
+&gt;= 4.0)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_x = 4.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(scale_x &lt;= 1.0)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_x = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>scale_y +=
+(old_x - x);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_x = x;<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>if (scale_y
+&gt;= 4.0) <o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_y = 4.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>else if
+(scale_y &lt;= 1.0)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_y = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void mouse(int button, int state, int x, int y)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_x = x;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>old_y = y;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>switch(button)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case
+GLUT_LEFT_BUTTON:<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(state == GLUT_DOWN)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>{<span style="mso-spacerun: yes">       </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>glutMotionFunc(motion);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(state == GLUT_UP)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>glutPassiveMotionFunc(rotation);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case
+GLUT_RIGHT_BUTTON:<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(state == GLUT_DOWN)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                     </span><span
+style="mso-spacerun: yes">   </span>glutMotionFunc(scale);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>default:<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>void keys(unsigned char key, int x, int y)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>switch (key)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'O':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'o':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(XY)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>XY = FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n XY =
+FALSE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>else
+if (!XY)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>XY = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">     </span><span
+style="mso-spacerun: yes">           </span>/*<span style="mso-spacerun:
+yes">      </span>printf(&quot;\n XY = TRUE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'Z':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'z':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(DEPTH)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>DEPTH = FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n DEPTH =
+FALSE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>else
+if (!DEPTH)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>DEPTH = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n DEPTH =
+TRUE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'c':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'C':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(CULL)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>CULL = FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n CULL =
+FALSE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>else
+if (!CULL)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>CULL = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">             </span><span
+style="mso-spacerun: yes">   </span>/*<span style="mso-spacerun: yes">     
+</span>printf(&quot;\n CULL = TRUE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'l':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'L':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(LIGHTING)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>LIGHTING = FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n LIGHTING
+= FALSE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>else
+if (!LIGHTING)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>LIGHTING = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n LIGHTING
+= TRUE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 's':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 'S':<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>if
+(SCALEX)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>SCALEX = FALSE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n SCALEX =
+FALSE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>else
+if (!SCALEX)<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                       
+</span>SCALEX = TRUE;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*<span style="mso-spacerun: yes">      </span>printf(&quot;\n SCALEX =
+TRUE\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>}<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 13:<span
+style="mso-spacerun: yes">                        </span>/*/ ascii for carriage
+return (RETURN) */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>rot_y
+= 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">                </span>rot_x
+= 0.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span><span
+style="mso-spacerun: yes">             </span>trans_z = -40.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_x = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>scale_y = 1.0;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>/*<span
+style="mso-spacerun: yes">      </span>printf(&quot;\n Return pressed to
+RESET\n&quot;); */<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>glutPostRedisplay();<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>break;<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>case 27:<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>printf(&quot;\n\n&quot;);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               
+</span>/*exit 0;*/<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=MsoNormal>}<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>int main(int argc, char** argv)<o:p></o:p></p>
+
+<p class=MsoNormal>{<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutInitWindowPosition(50, 50);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutInitWindowSize(640, 480);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutInit(&amp;argc, argv);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutCreateWindow(&quot;A2 - Vertex Array Color Cube (Lighting)&quot;);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>init();<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutDisplayFunc(display);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutReshapeFunc(reshape);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutMouseFunc(mouse);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutMotionFunc(NULL);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutPassiveMotionFunc(rotation);<o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutKeyboardFunc(keys);<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">       
+</span>glutMainLoop();<o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>return 0;<o:p></o:p></p>
+
+<p class=MsoNormal>}</p>
+
+</div>
+
+</body>
+
+</html>

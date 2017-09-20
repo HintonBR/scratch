@@ -1,0 +1,120 @@
+Greedy = 123264
+Prime took 1 times and = 71238
+Data File: test/a_15_1  Minimal Distance: 43489 and Path: AIEHCMONBJDGFKLA
+Greedy = 84147
+Prime took 1 times and = 48517
+Data File: test/a_15_2  Minimal Distance: 43708 and Path: AKIBCMLGJEFNOHDA
+Greedy = 103587
+Prime took 1 times and = 68215
+Data File: test/a_15_3  Minimal Distance: 58344 and Path: AJFHIGELDNKOBMCA
+Greedy = 112356
+Prime took 1 times and = 57356
+Data File: test/a_15_4  Minimal Distance: 48585 and Path: AJMOFIBECKLHNDGA
+Greedy = 87032
+Prime took 1 times and = 60399
+Data File: test/a_15_5  Minimal Distance: 39689 and Path: ACHKBODLJFGMNIEA
+Greedy = 97785
+Prime took 1 times and = 65033
+Data File: test/a_15_6  Minimal Distance: 61475 and Path: AFLIKHCOJDBGEMNA
+Greedy = 92878
+Prime took 1 times and = 70647
+Data File: test/a_15_7  Minimal Distance: 56592 and Path: AJNOIGDHFLKBCEMA
+Greedy = 82816
+Prime took 1 times and = 64915
+Data File: test/a_15_8  Minimal Distance: 49978 and Path: AGNEJDHBLCKMIOFA
+Greedy = 97401
+Prime took 1 times and = 55740
+Data File: test/a_15_9  Minimal Distance: 43448 and Path: AMBGOJCFLEINKDHA
+Greedy = 104433
+Prime took 1 times and = 77509
+Data File: test/a_15_10  Minimal Distance: 59698 and Path: AMIHCGLBDJNEKOFA
+Greedy = 83273
+Prime took 2044 times and = 82922
+Data File: test/a_17_1  Minimal Distance: 62375 and Path: AEBHJDIQGCMLPNFOKA
+Greedy = 120717
+Prime took 8 times and = 107322
+Data File: test/a_17_2  Minimal Distance: 60958 and Path: AGBFDJKHEIOPNLCMQA
+Greedy = 91014
+Prime took 21 times and = 89010
+Data File: test/a_17_3  Minimal Distance: 47284 and Path: ABFOKPJLEIDGMQNCHA
+Greedy = 107872
+Prime took 6 times and = 102606
+Data File: test/a_17_4  Minimal Distance: 61226 and Path: AOKQLICJEHDNGFPBMA
+Greedy = 84798
+Prime took 309 times and = 67278
+Data File: test/a_17_5  Minimal Distance: 65953 and Path: ANMEOHDFGQJBKCILPA
+Greedy = 102891
+Prime took 8 times and = 100345
+Data File: test/a_17_6  Minimal Distance: 44097 and Path: ADFJOMLIPQNBHKGECA
+Greedy = 60822
+Prime took 5000 times and = 76323
+Data File: test/a_17_7  Minimal Distance: 42076 and Path: AKNQFIJGPOBEDMHLCA
+Greedy = 95213
+Prime took 612 times and = 94270
+Data File: test/a_17_8  Minimal Distance: 51489 and Path: ANODMQLKBJHPGIEFCA
+Greedy = 80855
+Prime took 73 times and = 68368
+Data File: test/a_17_9  Minimal Distance: 48730 and Path: AEIBGFJOCPHKLQMNDA
+Greedy = 94259
+Prime took 48 times and = 83672
+Data File: test/a_17_10  Minimal Distance: 58752 and Path: ACNDOFGJILPKEBQHMA
+Greedy = 114977
+Prime took 612 times and = 105778
+Data File: test/a_19_1  Minimal Distance: 63125 and Path: AMDKGJHCBRLPSEQOFINA
+Greedy = 50536
+Prime took 5000 times and = 111528
+Data File: test/a_19_2  Minimal Distance: 35878 and Path: ANKHPEFRMCBJIGLSQDOA
+Greedy = 113319
+Prime took 5000 times and = 129117
+Data File: test/a_19_3  Minimal Distance: 64357 and Path: AENPOCIFMJBKSLHQDRGA
+Greedy = 93298
+Prime took 5000 times and = 119111
+Data File: test/a_19_4  Minimal Distance: 59750 and Path: AFPOQGIDMJNEKBHRCLSA
+Greedy = 110962
+Prime took 5000 times and = 119095
+Data File: test/a_19_5  Minimal Distance: 54990 and Path: ALDKOCHBQNMEPSRFGJIA
+Greedy = 106412
+Prime took 5000 times and = 129640
+Data File: test/a_19_6  Minimal Distance: 47915 and Path: APCRMJSBNKGEIHFOLQDA
+Greedy = 89274
+Prime took 5000 times and = 106479
+Data File: test/a_19_7  Minimal Distance: 53971 and Path: ALBQPKOJNERGSFMDICHA
+Greedy = 63181
+Prime took 5000 times and = 120800
+Data File: test/a_19_8  Minimal Distance: 46329 and Path: AEMBPJIOSCNKHGRQFDLA
+Greedy = 77928
+Prime took 5000 times and = 105029
+Data File: test/a_19_9  Minimal Distance: 46932 and Path: APQDHBEKINLSMFJROGCA
+Greedy = 117930
+Prime took 3634 times and = 117588
+Data File: test/a_19_10  Minimal Distance: 60680 and Path: ARCPMNFOLQEIDGJBKSHA
+Greedy = 65942
+Prime took 5000 times and = 132642
+Data File: test/a_21_1  Minimal Distance: 50932 and Path: AHRBLIKCFQMJEGOPUDNTSA
+Greedy = 109119
+Prime took 5000 times and = 134203
+Data File: test/a_21_2  Minimal Distance: 58688 and Path: ADOHBLRTJCNEUQIGKMSFPA
+Greedy = 85848
+Prime took 5000 times and = 120754
+Data File: test/a_21_3  Minimal Distance: 47459 and Path: AULMQFOBKCJEDGNSIRTPHA
+Greedy = 113504
+Prime took 5000 times and = 117865
+Data File: test/a_21_4  Minimal Distance: 40466 and Path: ATBJEQGKIFONCRDLPUMHSA
+Greedy = 105937
+Prime took 5000 times and = 134167
+Data File: test/a_21_5  Minimal Distance: 49346 and Path: AQKPJRNDBIESOUTFHGCLMA
+Greedy = 101819
+Prime took 5000 times and = 146148
+Data File: test/a_21_6  Minimal Distance: 57762 and Path: ACOHRIUBMTSKFJEGPLQDNA
+Greedy = 105303
+Prime took 5000 times and = 151869
+Data File: test/a_21_7  Minimal Distance: 56628 and Path: ARIJEHOUPLQDTMNFSCBKGA
+Greedy = 98600
+Prime took 5000 times and = 152180
+Data File: test/a_21_8  Minimal Distance: 50586 and Path: AGOUKPRITSCMDFEJLNBQHA
+Greedy = 144094
+Prime took 317 times and = 140379
+Data File: test/a_21_9  Minimal Distance: 62077 and Path: APNLQDEKOSGIHFUBJTMRCA
+Greedy = 79048
+Prime took 5000 times and = 142250
+Data File: test/a_21_10  Minimal Distance: 44712 and Path: ALCJTQMSBREFPNIHDKOGUA

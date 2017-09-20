@@ -1,0 +1,61 @@
+From: Michael L Torrie <torriem@cs.byu.edu>
+Newsgroups: byu.class.f00.c-s.c460
+Subject: A better way to view the bytes
+
+Rather than simply see the stream of bytes using () to surround
+non-printable characters, it would probably be better for most people to
+view them in the traditional 16-column hex/ascii display, like so:
+
+ethernet
+00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f   ........ ........
+10 11 12 13 14 15 16 17  18 19 1a 1b 1c 1d 1e 1f   ........ ........
+20 21 22 23 24 25 26 27  28 29 2a 2b 2c 2d 2e 2f    !"#$%&' ()*+,-./
+30 31 32 33 34 35 36 37  38 39 3a 3b 3c 3d 3e 3f   01234567 89:;<=>?
+40 41 42 43 44 45 46 47  48 49 4a 4b 4c 4d 4e 4f   @ABCDEFG HIJKLMNO
+50 51 52 53 54 55 56 57  00 00                     PQRSTUVW ..
+
+
+This way you can see both the hex codes and the printable ascii, in a
+tabular way.  It's far easier to count bytes and stuff when it's
+organized this way.   Unless there is some reason that I must view the
+data in the other format, I am using this method of viewing in my
+project.  (It is also similar to how data will be presented in the
+sniffer, so this makes it easier to catch patterns, etc.)
+
+Most I'm sure could code up an output subroutine that would do this.
+here's mine (MAXLEN is defined as 90):
+
+void print_chars(char *head, unsigned char *buff, int length)
+{
+int i;
+int j;
+#ifdef PRINTING
+
+ printf("%s\n",head);
+ for(i = 0; i < length; i+=16) {
+  for (j=0; j<16 ; j++){
+   if(j==8) printf(" ");
+   if(i+j < MAXLEN) {
+      printf("%02x ",buff[i+j]);
+     }else{
+      printf("   ");
+     }
+    }
+    printf("  ");
+    for (j=0; j<16 ; j++){
+   if(j==8) printf(" ");
+   if(i+j < MAXLEN) {
+      if(buff[i+j]>31){
+       printf("%c",buff[i+j]);
+      }else{
+       printf(".");
+      }
+     }
+    }
+    printf("\n");
+ }
+#endif
+}
+
+
+

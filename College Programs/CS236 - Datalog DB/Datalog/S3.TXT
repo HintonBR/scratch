@@ -1,0 +1,14 @@
+Schemes:
+        niam(N,I,A,M)
+
+Facts:
+        niam('Reagan','52','11 Maple','CS').
+        niam('Clinton','53','12 Ashton','MATH').
+        niam('North','51','10 Main','CS').
+
+Rules:
+        WhoMajor(N,M):-niam(N,I,A,M).
+
+Queries:
+        WhoMajor(N,'MATH')?
+        WhoMajor('North',M)?

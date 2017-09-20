@@ -1,0 +1,16 @@
+[Project]
+FileName=C:\Bryan's Files\programming\C++\CS312p1\FindDist\Datagenerator.dev
+Name=Datagenerator
+Use_gpp=1
+UnitCount=1
+ResFiles=C:\Bryan's Files\programming\C++\CS312p1\FindDist\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\PROGRA~1\DEV-C_~1\BIN\Mainicon.ico
+CompilerOptions=
+IncludeDirs=
+ObjFile=
+
+[Unit1]
+FileName=C:\Bryan's Files\programming\C++\CS312p1\FindDist\datagen.c
+

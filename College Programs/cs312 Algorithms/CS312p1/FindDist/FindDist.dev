@@ -1,0 +1,20 @@
+[Project]
+FileName=C:\Bryan's Files\programming\C++\CS312p1\FindDist\FindDist.dev
+Name=FindDist
+Use_gpp=1
+UnitCount=1
+ResFiles=C:\Bryan's Files\programming\C++\CS312p1\FindDist\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\PROGRAM FILES\DEV-C++\Bin\Mainicon.ico
+CompilerOptions=
+IncludeDirs=
+ObjFile=
+
+[Unit1]
+FileName=C:\Bryan's Files\programming\C++\CS312p1\FindDist\FindDistance.cpp
+FileTime=690961122
+
+[Unit0]
+FileTime=690882577
+

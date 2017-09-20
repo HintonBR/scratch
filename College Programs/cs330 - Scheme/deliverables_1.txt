@@ -1,0 +1,195 @@
+#|
+Bryan Hinton
+Adam Hess
+Project 1
+bhinton@cs.byu.edu
+"We did this by ourselves without person or computer help!!!"
+
+************************************************************************************************
+Deliverable #1
+************************************************************************************************
+public abstract class tree {
+}
+class leaf extends tree {
+	public int field1;
+	public leaf(int param1) {
+		this.field1 = param1;
+	}
+}
+class node extends tree {
+	public String field1;
+	public tree field2;
+	public tree field3;
+	public node(String param1, tree param2, tree param3) {
+		this.field1 = param1;
+		this.field2 = param2;
+		this.field3 = param3;
+	}
+}
+
+************************************************************************************************
+Deliverable #2
+************************************************************************************************
+(load "/u1/ugrad/bhinton/cs330/java-pp.scm")
+
+(define test1 (make-jdecl
+               '(public abstract)
+               (make-class (make-c-head "tree" '())
+                           '())))
+
+(define test2 (make-jdecl
+               '()
+               (make-class (make-c-head "leaf" "tree")
+                           (list (make-jdecl '(public) (make-var "int" "field1"))
+                                 (make-jdecl '(public) (make-method 
+                                                        (make-m-head '() "leaf"
+                                                                     (list (make-var "int" "param1")))
+                                                        (list 
+                                                         (make-assign "this.field1" "param1"))))))))
+
+(define test3 (make-jdecl
+               '()
+               (make-class (make-c-head "node" "tree")
+                           (list (make-jdecl '(public) (make-var "String" "field1"))
+                                 (make-jdecl '(public) (make-var "tree" "field2"))
+                                 (make-jdecl '(public) (make-var "tree" "field3"))
+                                 (make-jdecl '(public) (make-method 
+                                                        (make-m-head '() "node"
+                                                                     (list (make-var "String" "param1")
+                                 (make-var "tree" "param2")
+                                 (make-var "tree" "param3")))
+                                                        (list 
+                                                         (make-assign "this.field1" "param1")
+                                                         (make-assign "this.field2" "param2")
+                                                         (make-assign "this.field3" "param3"))))
+                           ))))
+
+
+
+(java-pp test1)
+(java-pp test2)
+(java-pp test3)
+
+
+************************************************************************************************
+Deliverable #3
+************************************************************************************************
+(load "/u1/ugrad/bhinton/cs330/SLAT-pp.scm")
+
+(load "/usr/local/lib/mit-scheme/records.scm")
+
+(load "/u1/ugrad/bhinton/cs330/token.scm")
+;(load "token.scm")
+
+(define-record decl (name prods))
+
+(define-record prod (name fields))
+
+(define parse-decl (lambda ()
+
+    (let ((tname (token->data (next))))
+
+         (advance)
+
+         (eat 'define-sym)
+
+         (make-decl tname (parse-prods)))))
+
+
+
+(define parse-prods (lambda ()
+
+    (let ((prodrec (parse-prod)))
+
+         (if (eq? (token->class (next)) 'vert)
+
+             (begin
+
+	       (eat 'vert)
+
+	       (cons prodrec (parse-prods)))
+
+             (list prodrec)))))
+
+
+
+(define parse-prod (lambda ()
+
+                     (let ((name (token->data (next)))) (advance) (eat 'lparen) (make-prod name (parse-fields)))))
+
+(define parse-fields (lambda ()
+
+	(if (equal? (token->class (next)) 'rparen)
+
+	(begin (advance) '())
+
+	(let ((name (token->data (next)))) (advance) (cons name (parse-fields)))
+
+        )))
+
+;test case 
+(define testcase "tree ::= leaf (integer) | node (String tree tree)")
+(tokenize testcase)
+(parse-decl testcase)
+
+************************************************************************************************
+Deliverable #4
+************************************************************************************************
+(load "/u1/ugrad/bhinton/cs330/parse.scm")
+(load "/u1/ugrad/bhinton/cs330/java-pp.scm")
+
+
+(define translate (lambda (x) 	(variant-case x
+			(decl (name prods) (cons
+				(make-jdecl '(public abstract) (make-class (make-c-head (symbol->string name) '()) '()))
+				(translate-prod-list prods name))))))
+
+(define translate-prod-list (lambda (y base)       
+       	(if (null? y) '()
+       	(cons (translate-prod (car y) base) (translate-prod-list (cdr y) base))
+	)))
+
+(define translate-prod (lambda (y base) (variant-case y
+		(prod (name fields)		
+			(make-jdecl '() (make-class (make-c-head (symbol->string name) base) 
+				(translate-field-list fields fields name 1)))))))
+
+(define translate-field-list (lambda (lst rlst mname counter) 
+	(if (null? lst) 
+		(list (translate-method rlst mname))
+		(cons (translate-field (car lst) counter) (translate-field-list (cdr lst) rlst mname (+ counter 1)))
+	)
+))
+
+(define translate-field (lambda (field count)
+	(make-jdecl '(public) (make-var (symbol->string field) (string-append "field" (number->string count))))))
+
+(define translate-method (lambda (flst mname) 
+	(make-jdecl '(public) (make-method (make-m-head '() (symbol->string mname) (translate-param-list flst 1)) (translate-assign-list flst 1)))))
+
+(define translate-param-list (lambda (lst count) 
+	(if (null? lst) '()
+		(cons (make-var (symbol->string (car lst)) (string-append "param" (number->string count))) (translate-param-list (cdr lst) (+ count 1)))	
+	)
+))
+
+(define translate-assign-list (lambda (lst count) 
+	(if (null? lst) '()
+		(cons (make-assign (string-append "this.field" (number->string count)) (string-append "param" (number->string count))) (translate-assign-list (cdr lst) (+ count 1)))	
+	)
+))
+
+(define pretty-print (lambda (lst) 
+                       (if (null? (cdr lst))
+                        (java-pp (car lst))
+                        (begin
+                         (java-pp (car lst))
+                         (pretty-print (cdr lst))))))
+                         
+(define testcase "tree ::= leaf (integer) | node (String tree tree)")
+(tokenize testcase)
+
+(pretty-print (translate (parse-decl))) 
+;(trace translate-prod-list)
+;(trace translate-param-list)
+;(trace translate-assign-list)

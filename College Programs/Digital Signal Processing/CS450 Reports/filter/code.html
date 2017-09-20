@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Source Code</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Source Code</h2></caption>
+
+<tr><td align="left"><pre><code>
+  private void filter(RealGrayImage data) {
+    ComplexImage c;
+    RealGrayImage before, out, phase;
+    int x, y;
+    double average, difference, temp;
+    x = y = 0;
+    temp =  average = difference =0;
+    FFT f= new FFT();
+    c = f.forward(Pad(data, 0, 0));
+    before = c.getMagnitudeImage();
+    for (int i=0; i&lt;(before.X()/2); i++) {
+        for (int j=0; j&lt;(before.Y()); j++) {
+            if (j != 0 || x != 0) {
+                temp = getAverage(before, i, j);
+                if (Math.abs((before.get(i, j) - temp)) > difference) {
+                    average = temp;
+                    difference = Math.abs((before.get(i, j) - temp));
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+    }
+    
+    phase = new PhaseImage(c);
+    c.setImag(x, y, (float) (average * Math.sin(phase.get(x, y))));
+    c.setReal(x, y, (float) (average * Math.cos(phase.get(x, y))));
+    average = getAverage(before, before.X() - x, before.Y() -y);
+    c.setImag(before.X() - x, before.Y() - y, (float) (average * Math.sin(phase.get(x, y))));
+    c.setReal(before.X() - x, before.Y() - y, (float) (average * Math.cos(phase.get(x, y))));
+    
+    out = ImageConverter.toRealGray(f.reverse(c));
+    out.byteSize();
+    writeToFile(out, "c:\\bryan\\programs\\java\\Image Filtering\\output\\filtered.pgm");
+   
+  }
+  private double getAverage(RealGrayImage data, int x, int y) {
+    int average = 0;
+    int numpoints = 0;
+    
+    if (x == 0) {
+        if ((y-1) == 0) {
+            average += data.get(x, y+1);
+            average += data.get(x+1, y+1);
+            average += data.get(x+1, y);
+            average += data.get(x+1, y-1);
+            return ((double) ((double) average) / ((double) 4));
+        }
+        else if (y == (data.Y()-1)) {
+            average += data.get(x+1, y);
+            average += data.get(x+1, y-1);
+            average += data.get(x, y-1);
+            return ((double) ((double) average) / ((double) 3));
+        }
+        else {
+            average += data.get(x, y-1);
+            average += data.get(x, y+1);
+            average += data.get(x+1, y+1);
+            average += data.get(x+1, y);
+            average += data.get(x+1, y-1);
+            return ((double) ((double) average) / ((double) 5));
+        }
+    }
+    else if (y == 0) {
+        if ((x-1) == 0) {
+            average += data.get(x+1, y);
+            average += data.get(x+1, y+1);
+            average += data.get(x, y+1);
+            average += data.get(x-1, y+1);
+            return ((double) ((double) average) / ((double) 4));
+        }
+        else if (x == ((data.X()/2)-1)) {
+            average += data.get(x-1, y);
+            average += data.get(x-1, y+1);
+            average += data.get(x, y+1);
+            return ((double) ((double) average) / ((double) 3));
+        }
+        else {
+            average += data.get(x+1, y);
+            average += data.get(x+1, y+1);
+            average += data.get(x, y+1);
+            average += data.get(x-1, y+1);
+            average += data.get(x-1, y);
+            return ((double) ((double) average) / ((double) 5));
+        }
+    }
+    else if ((x == ((data.X()/2)-1)) &&  (y == (data.Y()-1))) { 
+            average += data.get(x, y-1);
+            average += data.get(x-1, y);
+            average += data.get(x-1, y-1);
+            return ((double) ((double) average) / ((double) 3));
+    }
+    else if (x == ((data.X()/2)-1)) {
+            average += data.get(x, y-1);
+            average += data.get(x-1, y-1);
+            average += data.get(x-1, y);
+            average += data.get(x-1, y+1);
+            average += data.get(x, y+1);
+            return ((double) ((double) average) / ((double) 5));
+    }
+    else if (y == (data.Y()-1)) {
+            average += data.get(x-1, y);
+            average += data.get(x-1, y-1);
+            average += data.get(x, y-1);
+            average += data.get(x+1, y-1);
+            average += data.get(x+1, y);
+            return ((double) ((double) average) / ((double) 5));
+    }
+    else {
+            average += data.get(x-1, y-1);
+            average += data.get(x, y-1);
+            average += data.get(x+1, y-1);
+            average += data.get(x+1, y);
+            average += data.get(x+1, y+1);
+            average += data.get(x, y+1);
+            average += data.get(x-1, y+1);
+            average += data.get(x-1, y);
+            return ((double) ((double) average) / ((double) 8));
+    }
+      
+  }
+  private RealGrayImage Pad(RealGrayImage data, int size, int oldsize) {
+    int x,newx, y,newy,i;
+    RealGrayImage retVal;
+    x = data.X();
+    y = data.Y();
+    if (size==0) {
+        for (i=0; x>Math.pow(2, i);i++) {}
+        newx = (int) Math.pow(2, i);
+        for (i=0; y>Math.pow(2, i);i++) {}
+        newy= (int) Math.pow(2, i);
+    }
+    else {
+        newx = size;
+        newy = size;
+        x = oldsize;
+        y = oldsize;
+    }
+    retVal = data.addbuffer(newx, newy, newx-x, newy-y, 0);
+    return retVal;
+  }
+  private RealGrayImage performConvolutionByFFT(RealGrayImage in,RealGrayImage im, String data) {
+     ComplexImage out = null;
+     RealGrayImage rout=null;
+    Convolve c = null;
+    Date start;
+    Date stop;
+    try {
+        
+        if (data.equals("X")) {  
+             im = new ImageKernel(ImageKernel.SOBEL_X);
+        }
+        else if (data.equals("Y")) {
+            im = new ImageKernel(ImageKernel.SOBEL_Y);
+        }
+        FFT f = new FFT();
+        in = Pad(in, 0, 0);
+        im = Pad(im, in.X(), im.X());
+        System.out.println("Starting Convolution");
+        start = new java.util.Date();
+        out = f.forward(in);
+        out.multiply(f.forward(im));
+        rout = ImageConverter.toRealGray(f.reverse(out));
+        rout.byteSize();
+         stop  = new java.util.Date();
+         System.out.println("Stopping Convolution");
+         textOutput[0] = String.valueOf(stop.toString());
+         textOutput[1] = String.valueOf(start.toString());
+         System.out.println("Time Stop was " + textOutput[0]);
+         System.out.println("Time Start was " + textOutput[1]);
+         
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+    
+    return rout;
+  }
+
+</code></pre></tr>
+</table>
+
+
+
+</body>
+</html>

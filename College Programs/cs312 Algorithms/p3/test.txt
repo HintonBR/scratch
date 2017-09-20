@@ -1,0 +1,10 @@
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_1
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_2
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_3
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_4
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_5
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_6
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_7
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_8
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_9
+time dp /users/admin/cs312ta/public/test-cases/dynamic/a_17_10

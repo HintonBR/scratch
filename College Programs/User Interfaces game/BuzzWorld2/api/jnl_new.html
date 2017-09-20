@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//Netscape Comm. Corp.//DTD HTML//EN">
+<HTML>
+<HEAD>
+    <!-- SGI_COMMENT COSMOCREATE -->
+    <!-- SGI_COMMENT VERSION NUMBER="1.0" -->
+    <TITLE>Recent Changes to JNL, a Numerical Library for Java</TITLE>
+    <!-- Changed by: Henry Darilek, 26-June-1997 -->
+</HEAD>
+<BODY ALINK="#808000" VLINK="#008080" LINK="#4F5A9D" BGCOLOR="#FFFFFF">
+<MAP NAME="wpdflyer4.map">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="176,0, 360,39">
+<AREA SHAPE="RECT" HREF="/products/wpd/specs.html"
+ COORDS="106,56, 222,98">
+<AREA SHAPE="RECT" HREF="/products/index.html" COORDS="8,8, 88,78">
+</MAP>
+<MAP NAME="allproductsfooter-2.map">
+<AREA SHAPE="RECT" HREF="/products/wpd/add.html"
+ COORDS="233,41, 341,59">
+<AREA SHAPE="RECT" HREF="/products/wpd/specs.html"
+ COORDS="243,13, 330,36">
+<AREA SHAPE="RECT" HREF="/products/wpd/flyer.html"
+ COORDS="169,10, 217,33">
+<AREA SHAPE="RECT" HREF="/products/wpd/demos.html"
+ COORDS="136,43, 206,54">
+<AREA SHAPE="RECT" HREF="/products/wpd/overview.html"
+ COORDS="100,19, 159,35">
+<AREA SHAPE="CIRCLE" HREF="/products/wpd/index.html" COORDS="77,31, 17">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="26,14, 56,35">
+<AREA SHAPE="RECT" HREF="/search/index.html" COORDS="4,2, 49,13">
+</MAP>
+<P>
+<IMG SRC="../../pics/wpdflyer4.gif" USEMAP="#wpdflyer4.map"
+ WIDTH="354" HEIGHT="100" BORDER="0"
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/wpdspecifications4.gif"><BR>
+ </P>
+<P>
+</P>
+<CENTER><P ALIGN="CENTER">
+<FONT SIZE="5">JNL, a Numerical Library for Java</FONT><SUP><FONT SIZE="1">TM</FONT></SUP><FONT
+ SIZE="5"> </FONT><BR>
+<FONT SIZE="5">Version 1.0f</FONT> </P>
+</CENTER><CENTER><P ALIGN="CENTER">
+<FONT SIZE="4">Last updated: 6/26/97</FONT></P>
+</CENTER><P>
+</P>
+<P>
+</P>
+<P>
+<B><FONT SIZE="4">Change Tracking for the JNL</FONT></B></P>
+<P>
+<FONT SIZE="4">New in Revision F</FONT></P>
+<P>
+</P>
+<UL>
+    <LI>
+    Made code changes to eliminate possible non-thread-safe situations.
+	<LI>
+    Changed default tolerance used by SVD routines.
+	<LI>
+    Replaced element-by-element copies with system array copies where possible.
+	<LI>
+    Removed unnecessary initialization of arrays where possible. 
+    <LI>
+	Improved performance of class ComplexSVD.
+	<LI>
+	Moved documentation directory to same level as Classes directory.
+</UL>
+
+<P>
+<FONT SIZE="4">New in Revision E</FONT></P>
+<P>
+</P>
+<UL>
+    <LI>
+    Added determinant method for classes DoubleLU and ComplexLU.
+	<LI>
+    Added transpose method for classes DoubleMatrix and ComplexMatrix.
+	<LI>
+    The "final" restriction on all public classes was removed.
+	<LI>
+    Fixed bug in condition number method for classes DoubleLU and ComplexLU. 
+    <LI>
+	Added classes DoubleVector, ComplexVector, DoubleCholesky, and ComplexCholesky to the JNL.
+	<LI>
+    Added methods for matrix norms, dot product, and max/min to the DoubleMatrix and ComplexMatrix classes.
+	<LI>
+    Added generalized inverse to classes DoubleSVD and ComplexSVD.
+	<LI>
+    Removed restriction of square matrices only from classes DoubleQR and ComplexQR.
+	<LI>
+    Added solve method to classes DoubleQR and ComplexQR.
+	<LI>
+    Added additional rank method to classes DoubleQR and ComplexQR.
+	<LI>
+    Overloaded the solve method in classes DoubleMatrix and ComplexMatrix to handle Least_Squares problems.
+	<LI>
+    Renamed "double Info" and "double rank" methods to "int info" and "int rank".
+	<LI>
+    Fixed a bug which affected inverseFCdf, inverseTCdf, tCdf, skew, and kurtosis for class Statistics.
+	<LI>
+    Added more information to documentation for all classes.
+</UL>
+<P>
+
+<FONT SIZE="4">New in Revision D</FONT></P>
+<P>
+</P>
+<UL>
+    <LI>
+    Excel Numerics 
+    <LI>
+	 Added the list of interesting Excel functions for consideration in the JNL.
+</UL>
+<P>
+<FONT SIZE="4">New in Revision C</FONT></P>
+<P>
+</P>
+<UL>
+    <LI>
+    Major implementation changes. 
+    <LI>
+    Not adding new Classes for vector and matrix but using arrays instead. 
+    This limits the infix overloading to arrays. 
+</UL>
+<P>
+<FONT SIZE="4">New in Revision B</FONT> </P>
+<UL>
+    <LI>
+    New Website Layout
+    <LI>
+    Minor changes to the Specification
+    <LI>
+    Added API Documentation for Complex and Special Function Classes
+    <LI>
+    Added SmartTable: Excel<SUP><FONT SIZE="1">TM</FONT></SUP> to Java 
+    Applet Tool
+    <LI>
+    Added SmartTable Numerics
+    <LI>
+    Consolidated Comments from Revision A
+    <LI>
+    Added a Forum for future discussions
+</UL>
+<P>
+<B>Comments to <A HREF="mailto:javajim@boulder.vni.com">Java Jim</A> </B></P>
+<P>
+</P>
+<P>
+<IMG SRC="../../pics/allproductsfooter.gif"
+ USEMAP="#allproductsfooter-2.map" WIDTH="430" HEIGHT="57" BORDER="0"
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/allproductsfooter.gif"></P>
+<P>
+<BR>
+ <FONT SIZE="1">Copyright &#169; 1997 - Visual Numerics, Inc.&#174; </FONT></P>
+</BODY>
+</HTML>

@@ -1,0 +1,319 @@
+;;; OBJECT-ORIENTED INTERPRETER WITHOUT INHERITENCE
+;;; 27 March 1998, BSM
+
+(load "/usr/local/lib/mit-scheme/parser.scm")
+(load "/usr/local/lib/mit-scheme/ff.scm")
+(load "/usr/local/lib/mit-scheme/cells.scm")
+
+;;;-----------------------------------------------------------
+;;; SOME NEW RECORDS
+
+(define-record closure (formals body env))
+(define-record prim-proc (prim-op))
+(define-record extended-rec-env (vars vals old-env))
+(define-record define (var exp))
+(define-record class (c-vars c-vals i-vars m-env))
+(define-record instance (class i-vals))
+(define-record meth-closure (formals body env class))
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR THE ENVIRONMENTS
+
+(define the-empty-env (create-empty-ff))
+(define extend-env extend-ff*)
+(define apply-env  apply-ff)
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR PROCS
+
+(define apply-proc
+  (lambda (proc args class inst)
+    (variant-case proc
+      (prim-proc (prim-op) 
+         (apply-prim-op prim-op args))
+      (closure (formals body env)
+        (eval-exp body (extend-env formals (map make-cell args) env) class inst))
+      (else (error "Invalid procedure:" proc)))))
+
+
+(define apply-prim-op
+  (lambda (prim-op args)
+    (case prim-op
+      ((+) (+ (car args) (cadr args)))
+      ((-) (- (car args) (cadr args)))
+      ((*) (* (car args) (cadr args)))
+      ((less) (if (< (car args) (cadr args)) 1 0))
+      ((add1) (+ (car args) 1))
+      ((sub1) (- (car args) 1))
+      ((zero) (if (zero? (car args)) 1 0))
+      ((null) (if (null? args) 1 0))
+      ((cons) (cons (car args) (cadr args)))
+      ((list) args)
+      ((car) (caar args))
+      ((cdr) (cdar args))
+      (else (error "Invalid prim-op name:" prim-op)))))
+
+
+(define prim-op-names '(+ - * add1 sub1 zero less null cons list car cdr))
+
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR INIT-ENV
+
+(define init-env 
+  (extend-env
+    (cons 'emptylist prim-op-names)
+    (cons '() (map make-prim-proc prim-op-names))
+    the-empty-env))
+
+(define init-meth-env 
+  (extend-env 
+    '(initialize)
+    (list
+       (make-meth-closure 
+         '() 
+         (make-lit 0) 
+         init-env 
+         (lambda () (make-class '* '() '#() '() the-empty-env))))
+    the-empty-env))
+
+(define parse (lambda (s)
+   (if (string? s) (character-string-parser s)
+                   (error "You need to enter a string!!!" s))))
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR VARIABLE LOOKUP
+
+(define lookup
+  (lambda (var vars vals)
+    (cell-ref (cell-lookup var vars vals))))
+
+(define cell-lookup
+  (lambda (var vars vals)
+    (letrec ((loop (lambda (vars c)
+                     (cond
+                       ((null? vars) (error "Unassigned variable:" var))
+                       ((eq? (car vars) var) (vector-ref vals c))
+                       (else (loop (cdr vars) (- c 1)))))))
+      (loop vars (- (length vars) 1)))))
+
+(define assign
+  (lambda (var value vars vals)
+    (cell-set! (cell-lookup var vars vals) value)))
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR MISC
+
+(define true-value?
+  (lambda (x)
+    (not (zero? x))))
+
+
+(define eval-rands
+  (lambda (rands env class inst)
+    (map (lambda (rand) (eval-exp rand env class inst)) 
+         rands)))
+
+
+(define apply-proc
+  (lambda (proc args class inst)
+    (variant-case proc
+      (prim-proc (prim-op) (apply-prim-op prim-op args))
+      (closure (formals body env)
+         (eval-exp body 
+                   (extend-env formals args env) 
+                   class 
+                   inst))
+      (else (error "Invalid procedure:" proc)))))
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR EVAL-EXP
+
+(define eval-exp
+  (lambda (exp env class inst)
+    (variant-case exp
+
+      ;; base ooell expressions
+
+      (i-varref (var) (lookup var (class->i-vars class) (instance->i-vals inst)))
+      (c-varref (var)
+          (lookup var (class->c-vars class) (class->c-vals (instance->class inst))))
+      (i-varassign (var exp)
+          (let ((value (eval-exp exp env class inst)))
+            (assign var value (class->i-vars class) (instance->i-vals inst))))
+      (c-varassign (var exp)
+          (let ((value (eval-exp exp env class inst))
+               (c-vals (class->c-vals (instance->class inst))))
+             (assign var value (class->c-vars class) c-vals)))
+      (method (formals body)
+          (let ((new-formals (cons 'self formals)))
+             (lambda (class-thunk)
+              (make-meth-closure new-formals body env class-thunk))))
+      (meth-app (name rands)
+          (let ((args (map (lambda (rand) 
+                            (eval-exp rand env class inst)) 
+                         rands)))
+            (meth-call name (instance->class (car args)) args)))
+      (new-simpleinst (class-exp)
+         (let ((inst-class (eval-exp class-exp env class inst)))
+            (let ((new-inst (make-instance inst-class
+                              (make-vals (class->i-vars inst-class)))))
+               (meth-call 'initialize inst-class (list new-inst))
+               new-inst)))   
+      (new-simpleclass (c-vars i-vars methdecls init-exp)
+            (let ((open-methods
+                (map (lambda (decl)
+                       (eval-exp (decl->exp decl) env class inst))
+                     methdecls)))
+               (letrec ((new-class
+                     (make-class c-vars (make-vals c-vars) i-vars
+                       (extend-env (map decl->var methdecls)
+                         (map (lambda (open-method)
+                                (open-method (lambda () new-class)))
+                              open-methods)
+                         init-meth-env))))
+                  (eval-exp init-exp env new-class (make-instance new-class '#()))
+            new-class)))
+
+      ;; old stuff from Chapter 5
+
+      (lit (datum) datum)
+      (varref (var)  
+         (let ((den (apply-env env var)))
+            (if (cell? den) (cell-ref den) den)))
+      (begin (exp1 exp2)
+         (begin (eval-exp exp1 env class inst)
+                (eval-exp exp2 env class inst)))
+      (app (rator rands)
+        (let ((proc (eval-exp rator env class inst))
+              (args (eval-rands rands env class inst)))
+          (apply-proc proc args class inst)))
+      (if (test-exp then-exp else-exp)
+        (if (true-value? (eval-exp test-exp env class inst))
+            (eval-exp then-exp env class inst)
+            (eval-exp else-exp env class inst)))
+      (let (decls body)
+        (let ((vars (map decl->var decls))
+              (exps (map decl->exp decls)))
+          (let ((new-env (extend-env vars
+                           (eval-rands exps env class inst)
+                           env)))
+            (eval-exp body new-env class inst))))
+      (proc (formals body)
+        (make-closure formals body env))
+      (else (error "Invalid abstract syntax:" exp)))))
+
+;;;--------------------------------------------
+;;; FUNCTIONS FOR METHODS
+
+(define meth-call
+  (lambda (name class args)
+    (let ((method (meth-lookup name class)))
+      (let ((body     (meth-closure->body    method) )
+            (formals  (meth-closure->formals method) )
+            (env      (meth-closure->env     method) )
+            (class    (meth-closure->class   method)))
+        (eval-exp
+           body
+           (extend-env formals
+                       (map make-cell args)
+                       env)
+           (class)
+           (car args))))))
+
+
+(define meth-lookup
+  (lambda (name class)
+    (apply-env (class->m-env class) name)))
+
+
+(define make-vals
+  (lambda (vars)
+    (list->vector (map (lambda (x) (make-cell '*uninitialized*)) vars))))
+
+
+
+;;;-----------------------------------------------------------
+;;; FUNCTIONS FOR READ-EVAL-PRINT / DEFINE
+
+(define read-eval-print
+  (lambda ()
+    (display "-->")
+    (let ((elrec (parse (read))))
+      (variant-case elrec
+         (define (var exp)
+             (if (defined-ff? var init-env)
+               (cell-set! (apply-env init-env var) 
+                                  (eval-exp exp init-env '() '() ))
+               (set! init-env 
+                             (extend-env (list var)
+                         (list (make-cell
+                              (eval-exp exp init-env '() '() )))
+                         init-env))))
+         (else (write (eval-exp elrec init-env '() '() )))))
+    (newline)
+    (read-eval-print)))
+
+(read-eval-print)
+
+
+;;;************************************************************
+;;; INPUT TO TEST THE INTERPRETER
+
+
+"define stackclass =
+  simpleclass (pushed) (stk, localpushed)
+   (initialize = method ()
+      begin
+        &localpushed := 0;
+        &stk := emptylist
+      end;
+    empty = method () null(&stk);
+    push = method (x)
+      begin
+        &&pushed := +(&&pushed, 1);
+        &localpushed := +(&localpushed, 1);
+        &stk := cons(x, &stk)
+      end;
+    pop = method ()
+      if null(&stk)
+      then error()
+      else begin
+        &&pushed := -(&&pushed, 1);
+        &localpushed := -(&localpushed, 1);
+        &stk := cdr(&stk)
+      end;
+    top = method ()
+      if null(&stk)
+      then error()
+      else car(&stk);
+    pushed = method () &&pushed;
+    localpushed = method () &localpushed)
+   &&pushed := 0"
+
+"define x = simpleinstance(stackclass)"
+"define y = simpleinstance(stackclass)"
+
+"$push(x, 7)"
+"$pushed(x)"
+"$localpushed(x)"
+"$push(y, 8)"
+"$pushed(y)"
+"$localpushed(y)"
+"$push(x, 10)"
+"$pushed(x)"
+"$localpushed(x)"
+"$top(x)"
+"$pop(x)"
+"$pushed(x)"
+"$localpushed(x)"
+"$top(y)"
+"$pop(y)"
+"$pushed(x)"
+"$pushed(y)"
+"$localpushed(y)"
+"$top(x)"
+"$pop(x)"
+"$pushed(x)"
+"$localpushed(x)"
+

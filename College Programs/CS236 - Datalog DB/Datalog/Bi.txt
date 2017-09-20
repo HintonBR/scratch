@@ -1,0 +1,29 @@
+Schemes:
+        r1(A,B,C)
+	r2(C,D,E)
+
+Facts:
+        r1('a','b','c').
+        r1('a','d','e').
+        r1('f','g','h').
+	r1('n','b','c').
+	r1('r','g','h').
+	r1('b','a','h').
+
+	r2('e','t','a').
+	r2('c','t','r').
+	r2('c','o','d').
+	r2('h','i','!').
+	r2('e','f','g').
+	r2('c','b','a').
+	r2('h','a','r').
+
+Rules:
+        r3(A,B,C,D,E) :- r1(A,B,C),r2(C,D,E),=(A,E).
+	r4(C,D) :- r1(A,B,C),r2(C,D,E),<(B,E).
+	r5(B,C,E) :- r1(A,B,C),r2(C,D,E),>=(A,E),!=(B,D).
+
+Queries:
+        r3(A,B,C,D,E)?
+        r4(C,D)?
+	r5(B,C,E)?

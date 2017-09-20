@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Times</h2></caption>
+
+<tr>
+       <th>Operation</th>
+	   <th>Start Time</th>
+	   <th>Stop Time</th>
+	   <th>Elapsed Time</th>
+</tr>
+<tr>
+       <td align="center">Square * Square - Convolution</td>
+  	   <td align="center">8:43:18</td>
+	   <td align="center">8:43:36</td>
+	   <td align="center">18 seconds</td>
+</tr>
+<tr>
+       <td align="center">Square * Square - FFT</td>
+  	   <td align="center">16:55:25</td>
+	   <td align="center">16:55:26</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>
+	   <td align="center">Square * 2D_Gaussian - Convolution</td>
+	   <td align="center">8:43:37</td>
+	   <td align="center">8:43:55</td>
+	   <td align="center">18 seconds</td>
+</tr>
+<tr>
+	   <td align="center">Square * 2D_Gaussian - FFT</td>
+	   <td align="center">16:55:26</td>
+	   <td align="center">16:55:26</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>	   
+  	   <td align="center">Sobel_X * Square - Convolution</td>
+	   <td align="center">8:44:02</td>
+	   <td align="center">8:44:02</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>	   
+  	   <td align="center">Sobel_X * Square - FFT</td>
+	   <td align="center">16:55:26</td>
+	   <td align="center">16:55:27</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>
+       <td>Sobel_Y * Square - Convolution</td>
+	   <td align="center">8:44:05</td>
+	   <td align="center">8:44:05</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>
+       <td>Sobel_Y * Square - FFT</td>
+	   <td align="center">16:55:27</td>
+	   <td align="center">16:55:27</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>
+	   <td>Square * Noisy Image - Convolution</td>
+	   <td align="center">8:44:09</td>
+	   <td align="center">8:45:23</td>
+	   <td align="center">74 seconds</td>
+</tr>
+<tr>
+	   <td>Square * Noisy Image - FFT</td>
+	   <td align="center">16:55:27</td>
+	   <td align="center">16:55:27</td>
+	   <td align="center">0 seconds</td>
+</tr>
+<tr>
+	   <td>2D_Gaussian * Noisy Image - Convolution</td>
+	   <td align="center">8:45:24</td>
+	   <td align="center">8:46:39</td>
+	   <td align="center">75 seconds</td>
+</tr>
+<tr>
+	   <td>2D_Gaussian * Noisy Image - FFT</td>
+	   <td align="center">16:55:28</td>
+	   <td align="center">16:55:28</td>
+	   <td align="center">0 seconds</td>
+</tr>
+</table>
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+<br><br><strong>Convolution using FFT and multiplication</strong><br>
+The computational complexity of doing an two FFTs and then a multiply is O(N<sup>2</sup>log N) which compares to 2D Convolution's complexity of
+O(N<sup>4</sup>).  The speedup it times is obvious.  The 0 seconds for every operation is a little misleading - time elapsed of course, but no single operation took a whole second to perform.
+To perform all 6 operations the total elapsed time was somewhere around 3 seconds which compares to almost 3 minutes for the convolution operations.
+The Sobel kernel operations show the lack of speedup that occurs when using a less than 7 X 7 kernel.  The operation on those kernels took essentially the same amount of time whether they were done
+by Convolution or FFT.  With more accurate timing it may be that convolution would have actually done those faster. 
+<br><strong>Image Filtering</strong><br>
+To find the rogue frequency and filter it out my code scans through every point in frequency domain and takes it's magnitude and finds the difference
+between it and the average of the magnitudes of its neighbors.  The points on the edges had to be handled differently because they possess fewer neighbors.
+Also we only had to scan half the pixels actually because the negative frequencies are represented in the second half of the x values.  I computed the averages at both places and used that average
+to replace the value at that point that was causing the interference in the image.       
+</tr>
+</table>
+
+</body>
+</html>

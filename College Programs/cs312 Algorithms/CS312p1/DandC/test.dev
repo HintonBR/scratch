@@ -1,0 +1,15 @@
+[Project]
+FileName=C:\Bryan's Files\programming\C++ Programs\DandC\test.dev
+Name=test
+Use_gpp=1
+UnitCount=1
+ResFiles=C:\Bryan's Files\programming\C++ Programs\DandC\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\PROGRA~1\DEV-C_~1\BIN\Mainicon.ico
+
+[Unit1]
+FileName=C:\Bryan's Files\programming\C++ Programs\DandC\dandc.c
+
+[Unit0]
+FileName=C:\Bryan's Files\programming\C++ Programs\DandC\danddev.cpp

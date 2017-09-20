@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Source Code</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Source Code</h2></caption>
+<tr><td align="left"><pre><code>
+private void partA() {
+    ComplexImage transx;
+    RealGrayImage r, cosine, scadd;
+    imagex = generateSine(8, 128, 'x');
+    FFT f = new FFT();
+    transx = f.forward(imagex);
+    try {
+    r  = transx.getMagnitudeImage();  
+    writeToFile(imagex, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputA.pgm");
+    writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputA.pgm");
+        ImageCanvas sg = new ImageCanvas(imagex);
+        jPanel1.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ImageCanvas ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+        
+         JOptionPane.showConfirmDialog(this, "Continue?", "Continue?", JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE);    
+        jPanel3.removeAll();
+        
+        cosine = generateCosine(8, 128, 'x');
+        f = new FFT();
+        transx = f.forward(cosine);
+        r  = transx.getMagnitudeImage();  
+        writeToFile(cosine, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputA2.pgm");
+        writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputA2.pgm");
+        sg = new ImageCanvas(cosine);
+        jPanel4.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+        
+        JOptionPane.showConfirmDialog(this, "Continue?", "Continue?", JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE);    
+        jPanel1.removeAll();
+        jPanel3.removeAll();
+        jPanel4.removeAll();
+        cosine.add(imagex);
+        f = new FFT();
+        transx = f.forward(cosine);
+        r  = transx.getMagnitudeImage();  
+        writeToFile(cosine, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputA3.pgm");
+        writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputA3.pgm");
+        sg = new ImageCanvas(cosine);
+        jPanel1.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+  }
+  private void partB() {
+    ComplexImage transx;
+    RealGrayImage r;
+    ImageCanvas sg, ig2;
+    imagey = generateSine(4, 128, 'y');
+    FFT f = new FFT();
+    transx = f.forward(imagey);
+    try {
+    r  = transx.getMagnitudeImage();  
+    writeToFile(imagey, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputB.pgm");
+    writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputB.pgm");
+    
+        sg = new ImageCanvas(imagey);
+        jPanel1.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+    JOptionPane.showConfirmDialog(this, "Continue?", "Continue?", JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE);
+    jPanel1.removeAll();
+    jPanel3.removeAll();
+    //Sum
+    imageadd = (RealGrayImage) imagex.copy();
+    imageadd.add(imagey);
+    transx = f.forward(imageadd);
+    try {
+    r  = transx.getMagnitudeImage();  
+    writeToFile(imageadd, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputAB.pgm");
+    writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputAB.pgm");
+    
+        sg = new ImageCanvas(imageadd);
+        jPanel1.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+  }
+  
+  private void partC() {
+      ImageCanvas sg, ig2;
+      RealGrayImage r;
+      ComplexImage transx;
+      Mapper m;
+      try {
+        imagerotate = (RealGrayImage) imageadd.copy();    
+        imagerotate = rotateImage(imagerotate, 15);
+       FFT f = new FFT();
+       transx = f.forward(imagerotate);
+       r  = transx.getMagnitudeImage();  
+       writeToFile(imagerotate, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputC.pgm");
+       writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputC.pgm");
+       imagerotate.byteSize();
+        sg = new ImageCanvas(imagerotate);
+        jPanel4.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+      }
+      catch (Exception e) {
+          JOptionPane.showMessageDialog(null, e.getMessage());
+      }
+  }
+  private void partD() {
+    ComplexImage transx;
+    RealGrayImage r;
+    ImageCanvas sg, ig2;
+    
+    FFT f = new FFT();
+    //Multiply
+    imagemult = (RealGrayImage) imagex.copy();
+    imagemult.multiply(imagey);
+    transx = f.forward(imagemult);
+    try {
+    r  = transx.getMagnitudeImage();  
+    writeToFile(imagemult, "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\inputD.pgm");
+    writeToFile((RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage()), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputD.pgm");
+    
+        sg = new ImageCanvas(imagemult);
+        jPanel1.add(sg);
+        r = (RealGrayImage) (new Shift(r.X()/2,r.Y()/2, Shift.WRAP)).apply(transx.getMagnitudeImage());
+        r.byteSize();
+        ig2 = new ImageCanvas(r);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+  }
+
+    private void partE() {
+    ImageCanvas sg, ig2;
+    RealGrayImage out1, out2;
+    PhaseImage out3, out4;
+    ComplexImage cg1, cg2,cg3,cg4;
+    
+    GrayImage rg1 = (GrayImage) readFromFile();
+    GrayImage rg2 = (GrayImage) readFromFile();  
+    
+     try {
+        sg = new ImageCanvas(rg1);
+        jPanel1.add(sg);
+         ig2 = new ImageCanvas(rg2);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+    
+    JOptionPane.showConfirmDialog(this, "Continue?", "Continue?", JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE);    
+    jPanel1.removeAll();
+    jPanel3.removeAll();
+    
+    FFT f = new FFT();
+    cg1 = f.forward(rg1);
+    cg2 = f.forward(rg2);
+    
+    out1 =  cg1.getMagnitudeImage();
+    out2 =   cg2.getMagnitudeImage();
+    out3 = new PhaseImage(cg1);
+    out4 = new PhaseImage(cg2);
+    
+    cg3 = new ComplexImage();
+    cg4 = new ComplexImage();
+    
+    cg3 = new ComplexImage(out1.X(), out1.Y());
+    cg4 = new ComplexImage(out2.X(), out2.Y());
+    
+    for (int i=0; i&lt;cg3.X(); i++) {
+        for (int j=0; j&lt;cg3.Y(); j++) {
+            if (i &lt; out4.X()  && j &lt; out4.Y()) {
+                cg3.setReal(i, j,(float) (out1.get(i,j) * Math.cos(out4.get(i,j))));
+                cg3.setImag(i, j, (float) (out1.get(i,j) * Math.sin(out4.get(i,j))));
+            }
+            else {
+                cg3.setReal(i, j, (float) (out1.get(i,j) * Math.cos(0)));
+                cg3.setImag(i, j, (float) (out1.get(i,j) * Math.sin(0)));
+            }
+        }
+    }
+    
+    for (int i=0; i&lt;cg4.X(); i++) {
+        for (int j=0; j&lt;cg4.Y(); j++) {
+            if (i &lt; out3.X() && j &lt; out3.Y()) {
+                cg4.setReal(i, j, (float) (out2.get(i,j) * Math.cos(out3.get(i,j))));
+                cg4.setImag(i, j, (float) (out2.get(i,j) * Math.sin(out3.get(i,j))));
+            }
+            else {
+                cg4.setReal(i, j, (float) (out2.get(i,j) * Math.cos(0)));
+                cg4.setImag(i, j, (float) (out2.get(i,j) * Math.sin(0)));
+            }
+        }
+    }
+    
+    cg3 = f.reverse(cg3);
+    cg4 = f.reverse(cg4);
+    
+    writeToFile(ImageConverter.toRealGray(cg3), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputE1.pgm");
+    writeToFile(ImageConverter.toRealGray(cg4), "c:\\bryan\\programs\\java\\fourier transforms\\Data for 2D\\outputE2.pgm");
+    
+    try {
+        sg = new ImageCanvas(cg3);
+        jPanel1.add(sg);
+         ig2 = new ImageCanvas(cg4);
+        jPanel3.add(ig2);
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+  }
+
+</code></pre></tr>
+</table>
+
+
+
+</body>
+</html>

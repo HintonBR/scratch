@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//Netscape Comm. Corp.//DTD HTML//EN">
+<HTML>
+<HEAD>
+    <!-- SGI_COMMENT COSMOCREATE -->
+    <!-- SGI_COMMENT VERSION NUMBER="1.1" -->
+    <TITLE>Overview for JNL, a Numerical Library for Java</TITLE>
+    <!-- Changed by: Henry Darilek, 26-Feb-1997 -->
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+    <META NAME="GENERATOR" CONTENT="Internet Assistant for Word 1.0Z">
+    <META NAME="AUTHOR" CONTENT="John F Brophy">
+    <META NAME="OPERATOR" CONTENT="Michael G. Lenert">
+</HEAD>
+<BODY ALINK="#808000" VLINK="#008080" LINK="#4F5A9D" BGCOLOR="#FFFFFF">
+<P><MAP NAME="wpdflyer4.map">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="176,0, 360,39">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/index.html" COORDS="8,8, 88,78">
+</MAP>
+<MAP NAME="allproductsfooter-2.map">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/add.html"
+ COORDS="233,41, 341,59">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/specs.html"
+ COORDS="243,13, 330,36">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/flyer.html"
+ COORDS="169,10, 217,33">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/demos.html"
+ COORDS="136,43, 206,54">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/overview.html"
+ COORDS="100,19, 159,35">
+<AREA SHAPE="CIRCLE" HREF="http://www.vni.com/products/index.html" COORDS="77,31, 17">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="26,14, 56,35">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/../search/index.html" COORDS="4,2, 49,13">
+</MAP>
+
+<BR>
+ <IMG SRC="images/wpdflyer4.gif" USEMAP="#wpdflyer4.map" border="0"
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/wpdspecifications4.gif">
+ <BR>
+<BR>
+ <FONT SIZE="5">Overview of JNL, a Numerical Library for Java</FONT><SUP><FONT SIZE="1">TM</FONT></SUP><FONT
+ SIZE="5"> </FONT></P>
+
+
+
+<P>
+JNL, a Numerical Library for Java, is a set of classes for the 
+most important numerical functions missing in Java. The library
+is comprised of one numerical type class, Complex, and three categories 
+of numerical functions classes: the special functions class, the linear 
+algebra classes, and the statistics class. All classes use double precision 
+floating point as the underlying float type. These classes are described 
+below. </P>
+
+<P>
+<FONT SIZE="4">Complex Numbers </FONT></P>
+<P>
+The  <A
+ HREF="VisualNumerics.math.Complex.html">class Complex </A> instantiates
+an object as being of type Complex and provides methods for double
+precision complex arithmetic. Methods for the addition, subtraction,
+multiplication, division, negation, and conjugation of complex numbers 
+are included. These methods are overloaded to allow for mixed double 
+and Complex operands.  </P>
+<P>
+
+<P>
+<FONT SIZE="4">Linear Algebra </FONT></P>
+<P>
+The linear algebra classes manipulate rectangular or square arrays of 
+type double or Complex. A rectangular matrix is a double[][] or 
+Complex[][] with all of its rows the same length. A square matrix is a 
+rectangular matrix with the number of columns equal to the number of rows. 
+All matrices are row major with zero as the index of the first element of 
+any row or column.</P>
+<P>
+The <A HREF="VisualNumerics.math.DoubleVector.html">class DoubleVector</A>
+ contains static methods for manipulating vectors. It does not define 
+a vector object; it is not possible to create an instance of 
+DoubleVector. There are methods for vector norms, maximum and minimum 
+elements, and dot product. </P>
+<P>
+The <A HREF="VisualNumerics.math.DoubleMatrix.html">class DoubleMatrix</A>
+ contains static methods for manipulating matrices. It does not define 
+a matrix object; it is not possible to create an instance of 
+DoubleMatrix. There are methods for matrix multiplication, inversion 
+and solving linear systems. </P>
+<P>
+The classes <A HREF="VisualNumerics.math.DoubleCholesky.html">DoubleCholesky</A>, 
+<A HREF="VisualNumerics.math.DoubleLU.html">DoubleLU</A>, <A
+ HREF="VisualNumerics.math.DoubleQR.html">DoubleQR</A> and <A
+ HREF="VisualNumerics.math.DoubleSVD.html">DoubleSVD</A> encapsulate 
+standard matrix decompositions. Their constructors take a matrix as an 
+argument and compute the decomposition. This may throw an exception. 
+Other member functions are then used to use or return parts of the 
+decomposition. </P>
+<P>
+Analogous to these classes for double-precision arrays there are 
+also classes for Complex arrays. They are <A HREF="VisualNumerics.math.ComplexVector.html">class ComplexVector</A>,
+<A HREF="VisualNumerics.math.ComplexMatrix.html">class ComplexMatrix</A>,
+<A HREF="VisualNumerics.math.ComplexCholesky.html">ComplexCholesky</A>, 
+<A HREF="VisualNumerics.math.ComplexLU.html">ComplexLU</A>, <A
+ HREF="VisualNumerics.math.ComplexQR.html">ComplexQR</A> and <A
+ HREF="VisualNumerics.math.ComplexSVD.html">ComplexSVD</A>.
+</P>
+<P>
+<FONT SIZE="4">Special Functions</FONT> </P>
+<P>
+The <A HREF="VisualNumerics.math.Sfun.html">class Sfun</A> contains a 
+collection of special functions. This class is analogous to the 
+existing class java.lang.Math, but contains more advanced functions. 
+This class is a collection of static member functions and data; it 
+cannot be instantiated.</P>
+<P>
+<FONT SIZE="4">Statistics</FONT> </P>
+<P>
+The <A HREF="VisualNumerics.math.Statistics.html">class Statistics</A>
+ contains a collection of basic statistical functions. This class is a 
+collection of static member functions; it cannot be instantiated. <BR>
+
+ <BR CLEAR="ALL">
+ <IMG SRC="images/allproductsfooter.gif" USEMAP="#allproductsfooter-2.map" WIDTH="430" HEIGHT="57" BORDER="0"
+
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/allproductsfooter.gif">
+ </P>
+<P>
+<BR>
+ <FONT SIZE="1">Copyright &#169; 1997 - Visual Numerics, Inc.&#174; </FONT></P>
+</BODY>
+</HTML>

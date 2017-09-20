@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+For the convolution problems I actually wrote a convolution algorithm that I used to get
+the convoluted signals requested in A-E.  I used the convolute function along with multiplication and 
+subtraction <code>( 2f(t) - (f(t) * Gaussian))</code>.    
+<br><br><strong>Part A - Rect Function * Rect Function</strong><br>
+As we move one rectangle over another the value of the convoluted signal at each point is dependent upon the values around that point.
+As a result when the rectangle signals are superimposed the signal doubles.  As an example at time point m + n - 1
+where m is the length of the input and n the length of the impulse, the kernel barely overlaps the input signal and so the output value
+at that point is small which also happens to be the same value as the point where the kernel and the input signal overlap for the first time (the signal is symmetrical).  This
+operation has a smoothing effect of the signal (we go from two hard edges to only one hard edge). 
+<br><strong>Part B - Rect Function * Gaussian Function</strong><br>
+The Gaussian function has a smoothing effect on the input function just like the Rect Function did in part A.  The difference is in the localization of the smoothing effect.
+The Rect function averages over a wider range and thus the smoothing can be quite dramatic and in fact changes the shape of the input signal from a square to a triangle.
+The Gaussian tends to have a smaller span and so the averaging occurs more locally and the smoothing effect is redendered as the softening of edges while retaining the shape of the original
+signal.  
+<br><strong>Part C - Gaussian Function * Gaussian Function</strong><br>
+On the homework assignment that I turned in I included the derivation sequence for why a gaussian convolved with a gaussian produces another
+gaussian.  It is at the end of the assignment.  The mathematical explanation without the derivation sequence is based on the fact that
+a gaussian function is closed under convolution.  This is due to the fact that the derivative of e^<sup>x</sup> is e^<sup>x</sup>.  Thus the integral of e^<sup>x</sup> is
+e^<sup>x</sup>.  So anytime we want to get the derivative or integral we get back an equation of the same form that varies only according to whatever the true value for x is.  When we convolute two gaussians we simply multiply them
+together to get the equation in terms of only one function (which is a gaussian) and a constant (the derivation sequence show this really well) and then solve for the integral which returns to us
+another gaussian as the output.  
+<br><strong>Part E - Gaussian Function * Noise Function</strong><br>
+D had a greater effect on the Noise function than E in the sense that the convolution of the Rect Function
+with the noise function produced a smoother more symmetrical output function.  This also is the biggest difference
+between the two convoluted outputs.  While the Gaussian also smoothed the noise function to an extent because of the way
+the averaging is done when using the Gaussian as the impulse we see the inconsistencies as waviness in the curve (not symmetrical).  
+</tr>
+</table>
+
+</body>
+</html>

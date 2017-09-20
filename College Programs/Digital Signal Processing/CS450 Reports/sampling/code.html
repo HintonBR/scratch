@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Source Code</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Source Code</h2></caption>
+
+<tr><td align="left"><pre><code>
+  private RealGrayImage sample(RealGrayImage data, int sampleRate) {
+      RealGrayImage newImage = new RealGrayImage(data.X()/sampleRate, data.Y()/sampleRate);
+      Convolve c = new Convolve(new ImageKernel(1,8));
+      int i, j;
+      try {   
+          ic.setImage(data);
+          data = (RealGrayImage) c.apply(data);
+           i = j = 0;
+            for (i = 0; i &lt; (data.X()/sampleRate); i++) {
+                for (j = 0; j &lt;(data.Y()/sampleRate); j++) {
+                    newImage.set(i, j, data.get(i*sampleRate, j*sampleRate));
+                }
+            }
+           ic2.setImage(newImage);
+      }
+      catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e.getMessage());
+      }
+      return newImage;
+  }
+
+  
+  /*Code to do Deconvolution*/
+   private void miViewActionPerformed(java.awt.event.ActionEvent evt) {
+    String input;
+    float in;
+    ComplexImage gaus, imageFFT;
+    RealGrayImage newImage;
+    FFT f = new FFT();
+    RealGrayImage r = readFromFile();
+    try {
+        Convolve c = new Convolve(new ImageKernel(ImageKernel.UNIFORM));
+        c.apply(r);
+        ic.setImage(r);
+        JOptionPane.showMessageDialog(null, r.X() + ", " + r.Y());
+        input = JOptionPane.showInputDialog("Specify float");
+        in = Float.valueOf(input).floatValue();
+        in = (float) (((float)1)/(float)(in));
+        gaus = ImageGenerator.buildGaussInFreqDomain(in, r.X(), r.Y(), 0,0, false);
+        imageFFT = f.forward(r);
+        imageFFT.divide(gaus);
+        newImage = ImageConverter.toRealGray(f.reverse(imageFFT));
+        newImage.add(255);
+        ic2.setImage(newImage);
+        ic2.repaint();
+        ic.repaint();
+    }
+    catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+</code></pre></tr>
+</table>
+
+
+
+</body>
+</html>

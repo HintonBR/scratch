@@ -1,0 +1,8 @@
+rmdir file1.dir
+copy file1 file1.tmp
+del file1
+cd dir2
+cd ..
+copy file1.tmp file1
+del file1.tmp
+echo hello

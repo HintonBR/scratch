@@ -1,0 +1,58 @@
+[Project]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\WebCrawl.dev
+Name=WebCrawler
+Use_gpp=1
+UnitCount=16
+ResFiles=C:\Bryan's Files\programming\C++ Programs\cs240web\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\PROGRAM FILES\DEV-C++\Icon\Mainicon.ico
+
+[Unit1]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\Letter.h
+
+[Unit2]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\URLList.h
+
+[Unit3]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\URL.h
+
+[Unit4]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\CS240.cpp
+
+[Unit5]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\CS240.h
+
+[Unit6]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\openURL.h
+
+[Unit7]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\openURL.cpp
+
+[Unit8]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\WordList.h
+
+[Unit9]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\Word.h
+
+[Unit10]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\main.cpp
+
+[Unit11]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\Letter.cpp
+
+[Unit12]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\WordList.cpp
+
+[Unit13]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\Word.cpp
+
+[Unit14]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\URL.cpp
+
+[Unit15]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\URLList.cpp
+
+[Unit16]
+FileName=C:\Bryan's Files\programming\C++ Programs\cs240web\Debug.h
+

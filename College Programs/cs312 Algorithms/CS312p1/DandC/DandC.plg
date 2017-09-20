@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: DandC - Win32 DebugNew--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP10C4.TMP" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"DebugNew/DandC.pch" /YX /Fo"DebugNew/" /Fd"DebugNew/" /FD /GZ /c 
+"C:\Bryan's Files\programming\C++ Programs\DandC\newbrute.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP10C4.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP10C5.TMP" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"DebugNew/DandC.pdb" /debug /machine:I386 /out:"DebugNew/DandC.exe" /pdbtype:sept 
+".\DebugNew\newbrute.obj"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP10C5.TMP"
+<h3>Output Window</h3>
+Compiling...
+newbrute.c
+C:\Bryan's Files\programming\C++ Programs\DandC\newbrute.c(236) : warning C4101: 'true_sum' : unreferenced local variable
+Linking...
+
+
+
+<h3>Results</h3>
+DandC.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

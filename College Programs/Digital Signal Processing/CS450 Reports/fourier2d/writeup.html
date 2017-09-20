@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+<br><br><strong>Part A</strong><br>
+The magnitude shows for each image the spikes that occur at frequency 8 and -8 for cosine and sin from a top-down view.
+The magnitude display of the frequency domain shows how much information can be encoded in a small amount of data.  We took the
+vertical bands created by the functions and converted them into two single spikes without losing any data.     
+<br><br><strong>Part B</strong><br>
+We would expect to see the two images added together's magnitude to be the sum of their original Magnitudes because 
+of the linearity of the Fourier Transfrom.  That is upheld by the two points being located at frequency 8, -8 on the x axis and 
+frequency 4, -4 on the y-axis.  
+<br><br><strong>Part C</strong><br>
+The Fourier Transform has the property that maps rotations in the image in the spatial domain directly onto the frequency
+domain.  Due to this property we would expect that the Magnitude of the Rotated Sum of the two images to be a rotated copy of the 
+Magnitude of the sum and once again that is shown in the image (albeit faintly!) with the four points that were once located on the x and y axis rotated
+by the same 15 degrees that the image was rotated by in the spatial domain.  
+<br><br><strong>Part D</strong><br>
+Multiplying the two images ends up having a masking effect and we see that the only places where there is white are where the two images
+had overlapping white values.  Additionally this operation is exactly what we did in Problem 1 where we had to compute the Fourier Transform of
+the sin(x) and sin(y).  The only difference there is the frequency of the points which would just adjust their location in the frequency domain.  As the book work indicated
+we would expect four point again this time appearing in a box-like shape.   
+<br><br><strong>Part E</strong><br>
+From the examples in the book on page 202 the indication is that phase has a greater effect on the structure of the image and
+thus output image 1 which had the magnitude of the ball and the phase of the gull we would expect to look more like the gull which it does.
+This also holds true for image 2 which has the phase of the ball and shows an image of the ball.
+ 
+</tr>
+</table>
+
+</body>
+</html>

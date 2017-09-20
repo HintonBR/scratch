@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0052)http://www.cs.byu.edu/courses/cs312/dandc/qsort.html -->
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4207.2601" name=GENERATOR></HEAD>
+<BODY>
+<H3>HOW TO USE qsort</H3>
+<H1>SUMMARY</H1>qsort is a standard ANSI C function. It is found in the library 
+stdlib.h. <BR>qsort performs a quicksort on elements of user-defined types. 
+<BR><BR>
+<H1>FORMAT</H1>void qsort( <BR>void *base, <BR>size_t num, <BR>size_t width, 
+<BR>int (*compar)(const void*, const void* ) <BR>); 
+<H1>PARAMETERS</H1>
+<LI>void *base -- base is a pointer to the first element in the array. It is 
+usually simply the name of the array to be sorted. <BR>
+<LI>size_t num -- num is the number of elements in the array to be sorted. <BR>A 
+size_t is the return type of the sizeof() operator. <BR>You will never go wrong 
+if you pass this parameter as: sizeof(name of the array)/sizeof(the type of 
+element of the array). 
+<LI>size_t width -- width is the size of the type of element which makes up the 
+array to be sorted. You will never go wrong if you pass this parameter as: 
+sizeof(the type of element of the array). 
+<LI>int (*compar)(const void*, const void* ) -- compar is simply the NAME of the 
+function which YOU must write. It is this function that gives qsort the 
+information to know how to compare data. <BR>The function you must write takes 
+as parameter two const void* and returns an int. Only three ints are returned. 
+<UL>-1 is returned if the first element is less than the second element. </UL>
+<UL>0 is returned if the first element is equal to the second element. </UL>
+<UL>1 is returned if the first element is greater than the second element. 
+</UL><BR<BR>NOTE <BR>In order to access the actaul information within the two 
+passed elements, YOU must CAST the elements to the type they represent. 
+<H1>EXAMPLE</H1>#include stdio.h <BR>#include stdlib.h <BR>int compare (const 
+void*, const void*); <BR><BR>int main ( ){ <BR>unsigned long x[4] = ( 1, 2, 3, 
+4); <BR>unsigned short y[4] = ( 100, 3000, 12, 43 ); <BR><BR>/* sort x array*/ 
+<BR>qsort( x, sizeof(x)/sizeof(unsigned long), sizeof(unsigned long), compare); 
+<BR>/* sort y array*/ <BR>qsort( y, sizeof(y)/sizeof(unsigned short), 
+sizeof(unsigned short), compare); <BR>return(0); <BR>} <BR>int compare (const 
+void*p, const *q){ <BR>unsigned long *ptr1 = (unsigned long*)(p); <BR>unsigned 
+long *ptr2 = (unsigned long*)(q); <BR>if (*ptr1 &lt; *ptr2) <BR>return(-1); 
+<BR>else if (*ptr1 ==*ptr2) <BR>return(0); <BR>else <BR>return(1); <BR>} 
+<BR><BR>Updated December 27, 1997 </LI></BODY></HTML>

@@ -1,0 +1,59 @@
+#############################################################################
+# To compile your project for the recent changes, type 'make'
+# To compile your project from the start, type 'make rebuild' 
+#############################################################################
+
+#----------------------------------------------------------------------------
+# This is the name of your executable program
+# Change the name of your program on the right hand side of the '=' 
+PROGRAM = prog2 
+
+#----------------------------------------------------------------------------
+# These are the source files to your project
+# They can be end with .C and .c
+C_FILES = point.C pointlist.C polygon.C polygonlist.C bucket.C edgetable.C 
+c_FILES =
+
+#----------------------------------------------------------------------------
+# The following is the flag you want to set in the program
+# just uncomment by deleting '#' and change the things on the right hand
+# side of the '=' 
+#FLAGS = -DDEBUG
+
+#----------------------------------------------------------------------------
+# The followings settings are for the OpenGL library settings
+CFLAGS = +a1 -O
+
+OPENGL = /opt/graphics/OpenGL
+INCLUDES = -I$(OPENGL)/contrib/libglut -I$(OPENGL)/include
+LIBS = -L$(OPENGL)/contrib/libglut -L$(OPENGL)/lib -L/usr/contrib/X11R6/lib \
+       -lglut -lGLU -lGL -lXmu -lXext -lX11 -lm
+LIBGLUT = $(OPENGL)/contrib/libglut/libglut.a
+
+#----------------------------------------------------------------------------
+# You don't really need to change the following especially if you don't 
+# know what's going on.
+# IMPORTANT NOTE:: Make sure that each indentation below is a tab,
+# not a series of spaces.
+CC = CC 
+OBJECTS = $(c_FILES:.c=.o) $(C_FILES:.C=.o)
+
+.SUFFIXES: .o .C .c
+
+.C.o:
+	$(CC) $(FLAGS) $(CFLAGS) $< -c $(INCLUDES)
+
+.c.o:
+	$(CC) $(FLAGS) $(CFLAGS) $< -c $(INCLUDES)
+
+$(PROGRAM): $(OBJECTS) $(LIBGLUT)
+	$(CC) $(FLAGS) $(CFLAGS) -o $@ $(INCLUDES) $(OBJECTS) $(LIBS)
+
+clean:  
+	rm -f $(PROGRAM) $(OBJECTS)
+
+rebuild: clean
+	make
+
+
+

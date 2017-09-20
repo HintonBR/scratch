@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Source Code</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Source Code</h2></caption>
+<tr><td align="center"><big>I only included the pertinent part of the code which is the function that performs
+the convolution of two signals.  It takes an input signal and an impulse signal and returns the output signal.  The code
+for edge enhancement just takes the input signal and adds it to itself then convolves the input siganl by the impulse
+and then subtracts the added input with the convolved input.</big></tr>
+<tr><td align="left"><pre><code>
+ private RealSignal performConvolution(RealSignal in,RealSignal im) {
+    RealSignal out = new RealSignal(in.length() + im.length() -1);
+    int i, j;
+    float total;
+    float[] inputArray, impulseArray;
+    inputArray = in.getData();
+    impulseArray = im.getData();
+    for (i=0; i&lt;out.length(); i++) {
+      total = 0;
+      for (j=0; j&lt;= i; j++) {
+        if (j &lt; in.length() && (i-j) &lt; im.length()) {
+          total += inputArray[j] * impulseArray[i-j]; 
+        }
+      }
+      out.set(i, total);
+    }
+   return out;
+  }
+private RealSignal edgeEnhancement(RealSignal in,RealSignal im) {
+    RealSignal out = new RealSignal(in.length() + im.length() -1);
+    RealSignal temp;
+    int i, j;
+    float total;
+    float[] inputArray, impulseArray;
+    temp = (RealSignal) in.copy();
+    temp.multiply(2);
+    in.convolve(im);
+    temp.subtract(in);
+    try{
+    (new jigl.signal.ops.levelOps.Scale(0, 2)).apply(temp);
+    }
+    catch (Exception e) {}
+   return temp;
+  }
+</code></pre></tr>
+</table>
+
+
+
+</body>
+</html>

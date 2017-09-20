@@ -1,0 +1,13 @@
+Schemes:
+        snap(S,N,A,P)
+        csg(C,S,G)
+
+Facts:
+        snap('12345','C. Brown','12 Apple St.','555-1234').
+        csg('CS101','12345','A').
+
+Rules:
+        WhoGradeCourse(N,G,C):-csg(C,S,G),snap(S,N,A,P).
+
+Queries:
+        WhoGradeCourse('Snoopy',G,C)?

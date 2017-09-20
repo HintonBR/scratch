@@ -1,0 +1,36 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Polygon Scan Conversion - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPF240.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /Fp"Debug/Polygon Scan Conversion.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Bryan\Programs\C++\3D-Polygon Scan Conversion\main.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPF240.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPF241.TMP" with contents
+[
+opengl32.lib glut32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/Polygon Scan Conversion.pdb" /debug /machine:I386 /out:"Debug/Polygon Scan Conversion.exe" /pdbtype:sept 
+".\Debug\edge.obj"
+".\Debug\main.obj"
+".\Debug\polygon.obj"
+".\Debug\StdAfx.obj"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPF241.TMP"
+<h3>Output Window</h3>
+Compiling...
+main.cpp
+C:\Bryan\Programs\C++\3D-Polygon Scan Conversion\main.cpp(94) : warning C4101: 'vertices' : unreferenced local variable
+Linking...
+
+
+
+<h3>Results</h3>
+Polygon Scan Conversion.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

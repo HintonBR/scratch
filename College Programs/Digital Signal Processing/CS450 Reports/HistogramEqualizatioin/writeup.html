@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+The important part of the source code and the part that relates to histogram equalization falls in the 
+createEqualizedImage method.  It is here that I use the JIGL libraries to generate a cumulative histogram.  
+I then loop through every gray level and used the equation for histogram equalization by dividing the cumulative 
+histogram count by the area of the original image and then multiplying that by 255 which was our maximum gray 
+value and stored that value in the appropriate location of the lookup table.  After creating a deep copy of the 
+original image and then looping each pixel and getting the gray value and using that to map into the lookup table 
+to get the equalized gray value for that pixel.  The difference between the output and input image is obvious 
+(and helped me to realize the value of histogram equalization).  By enhancing the image and scaling the image 
+across the whole spectrum of gray values the image which had previous been lumped at the dark end of the gray 
+spectrum and hidden was revealed!  The histogram and cumulative histogram of the original image show the lumping 
+also in how they change rapidly for the dark gray levels and then level off as you get about a third of the way 
+through the gray spectrum.  The resulting histogram is not completely level because of the high concentration at 
+specific levels which also cause the gaps in the histogram because columns close to the large values have to be 
+consolidated with other gray levels to produce the equalized image.
+
+</tr>
+</table>
+
+</body>
+</html>

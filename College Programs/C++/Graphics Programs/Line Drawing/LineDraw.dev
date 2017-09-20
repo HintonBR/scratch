@@ -1,0 +1,16 @@
+[Project]
+FileName=C:\Bryan\Programs\C++\Line Drawing\LineDraw.dev
+Name=Line Draw
+Use_gpp=1
+UnitCount=1
+ResFiles=C:\Bryan\Programs\C++\Line Drawing\rsrc.rc
+NoConsole=1
+IsDll=0
+Icon=C:\PROGRAM FILES\DEV-C++\Bin\Mainicon.ico
+CompilerOptions=
+IncludeDirs=C:\Program Files\Microsoft Visual Studio\VC98\Include
+ObjFile=-lopengl32 -lglut32
+
+[Unit1]
+FileName=C:\Bryan\Programs\C++\Line Drawing\Line Draw.cpp
+FileTime=715326321

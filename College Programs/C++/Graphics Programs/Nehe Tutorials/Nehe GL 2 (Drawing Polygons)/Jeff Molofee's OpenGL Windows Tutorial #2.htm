@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0046)http://nehe.gamedev.net/tutorials/lesson02.asp -->
+<HTML><HEAD><TITLE>Jeff Molofee's OpenGL Windows Tutorial #2</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<STYLE type=text/css>A:link {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ffccaa; TEXT-DECORATION: none
+}
+</STYLE>
+
+<META content="MSHTML 5.50.4616.200" name=GENERATOR></HEAD>
+<BODY text=#ffffff bgColor=#000000>
+<CENTER><!-- Begin Ban Man Pro Banner Code -  Zone: NeHe -->
+<SCRIPT language=JAVASCRIPT>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE6&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<S'+'CRIPT src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE4">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<A HREF="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Click&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" target="_new"><IMG SRC="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" width="468" height="60" border="0"></A>'); } }
+if (browName=='Microsoft Internet Explorer')
+     { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A target=_new 
+href="http://www.gamedev.net/banman/banman.asp?ZoneID=4&amp;Task=Click&amp;Mode=HTML&amp;PageID=70554"><IMG 
+height=60 
+src="Jeff Molofee's OpenGL Windows Tutorial #2_files/PT22%20468x60_02.gif" 
+width=468 border=0></A> </NOSCRIPT><!-- End Ban Man Pro Banner Code -  Zone: NeHe --></CENTER><BR><BR><!-- NeHe Logo -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=326 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/logo.png" 
+    height=130>&nbsp;</TD>
+    <TD vAlign=center align=middle width="100%"><FONT color=#ffccaa 
+      size=+3><B><I>Lesson 2</I></B></FONT></TD></TR></TBODY></TABLE><!-- Top Border - Joins With Logo (298) -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">In the first tutorial I taught you 
+      how to create an OpenGL Window. In this tutorial I will teach you how to 
+      create both Triangles and Quads. We will create a triangle using 
+      GL_TRIANGLES, and a square using GL_QUADS. <BR><BR>Using the code from the 
+      first tutorial, we will be adding to the DrawGLScene() procedure. I will 
+      rewrite the entire procedure below. If you plan to modify the last lesson, 
+      you can replace the DrawGLScene() procedure with the code below, or just 
+      add the lines of code below that do not exist in the last tutorial. 
+    </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>int DrawGLScene(GLvoid)							<FONT color=#ffffaa>// Here's Where We Do All The Drawing</FONT>
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		<FONT color=#ffffaa>// Clear The Screen And The Depth Buffer</FONT>
+	glLoadIdentity();						<FONT color=#ffffaa>// Reset The View</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">When you do a glLoadIdentity() 
+      what you are doing is moving back to the center of the screen with the X 
+      axis running left to right, the Y axis moving up and down, and the Z axis 
+      moving into, and out of the screen. The center of an OpenGL screen is 0.0f 
+      on the X and Y axis. To the left of center would be a negative number. To 
+      the right would be a positive number. Moving towards the top of the screen 
+      would be a positive number, moving to the bottom of the screen would be a 
+      negative number. Moving deeper into the screen is a negative number, 
+      moving towards the viewer would be a positive number. 
+      <BR><BR>glTranslatef(x, y, z) moves along the X, Y and Z axis, in that 
+      order. The line of code below moves left on the X axis 1.5 units. It does 
+      not move on the Y axis at all (0.0), and it moves into the screen 6.0 
+      units. When you translate, you are not moving a set amount from the center 
+      of the screen, you are moving a set amount from wherever you currently 
+      were on the screen. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glTranslatef(-1.5f,0.0f,-6.0f);					<FONT color=#ffffaa>// Move Left 1.5 Units And Into The Screen 6.0</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now that we have moved to the left 
+      half of the screen, and we've set the view deep enough into the screen 
+      (-6.0) that we can see our entire scene we will create the Triangle. 
+      glBegin(GL_TRIANGLES) means we want to start drawing a triangle, and 
+      glEnd() tells OpenGL we are done creating the triangle. Typically if you 
+      want 3 points, use GL_TRIANGLES. Drawing triangles is fairly fast on most 
+      video cards. If you want 4 points use GL_QUADS to make life easier. From 
+      what I've heard, most video cards render objects as triangles anyways. 
+      Finally if you want more than 4 points, use GL_POLYGON. <BR><BR>In our 
+      simple program, we draw just one triangle. If we wanted to draw a second 
+      triangle, we could include another 3 lines of code (3 points) right after 
+      the first three. All six lines of code would be between 
+      glBegin(GL_TRIANGLES) and glEnd(). There's no point in putting a 
+      glBegin(GL_TRIANGLES) and a glEnd() around every group of 3 points. This 
+      applies to quads as well. If you know you're drawing all quads, you can 
+      include the second group of four lines of code right after the first four 
+      lines. A polygon on the other hand (GL_POLYGON) can be made up of any 
+      amount of point so it doesn't matter how many lines you have between 
+      glBegin(GL_POLYGON) and glEnd(). <BR><BR>The first line after glBegin, 
+      sets the first point of our polygon. The first number of glVertex is for 
+      the X axis, the second number is for the Y axis, and the third number is 
+      for the Z axis. So in the first line, we don't move on the X axis. We move 
+      up one unit on the Y axis, and we don't move on the Z axis. This gives us 
+      the top point of the triangle. The second glVertex moves left one unit on 
+      the X axis and down one unit on the Y axis. This gives us the bottom left 
+      point of the triangle. The third glVertex moves right one unit, and down 
+      one unit. This gives us the bottom right point of the triangle. glEnd() 
+      tells OpenGL there are no more points. The filled triangle will be 
+      displayed. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glBegin(GL_TRIANGLES);						<FONT color=#ffffaa>// Drawing Using Triangles</FONT>
+		glVertex3f( 0.0f, 1.0f, 0.0f);				<FONT color=#ffffaa>// Top</FONT>
+		glVertex3f(-1.0f,-1.0f, 0.0f);				<FONT color=#ffffaa>// Bottom Left</FONT>
+		glVertex3f( 1.0f,-1.0f, 0.0f);				<FONT color=#ffffaa>// Bottom Right</FONT>
+	glEnd();							<FONT color=#ffffaa>// Finished Drawing The Triangle</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now that we have the triangle 
+      displayed on the left half of the screen, we need to move to the right 
+      half of the screen to display the square. In order to do this we use 
+      glTranslate again. This time we must move to the right, so X must be a 
+      positive value. Because we've already moved left 1.5 units, to get to the 
+      center we have to move right 1.5 units. After we reach the center we have 
+      to move another 1.5 units to the right of center. So in total we need to 
+      move 3.0 units to the right. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glTranslatef(3.0f,0.0f,0.0f);					<FONT color=#ffffaa>// Move Right 3 Units</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we create the square. We'll do 
+      this using GL_QUADS. A quad is basically a 4 sided polygon. Perfect for 
+      making a square. The code for creating a square is very similar to the 
+      code we used to create a triangle. The only difference is the use of 
+      GL_QUADS instead of GL_TRIANGLES, and an extra glVertex3f for the 4th 
+      point of the square. We'll draw the square top left, top right, bottom 
+      right, bottom left (clockwise). By drawing in a clockwise order, the 
+      square will be drawn as a back face. Meaning the side of the quad we see 
+      is actually the back. Objects drawn in a counter clockwise order will be 
+      facing us. Not important at the moment, but later on you will need to know 
+      this. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glBegin(GL_QUADS);						<FONT color=#ffffaa>// Draw A Quad</FONT>
+		glVertex3f(-1.0f, 1.0f, 0.0f);				<FONT color=#ffffaa>// Top Left</FONT>
+		glVertex3f( 1.0f, 1.0f, 0.0f);				<FONT color=#ffffaa>// Top Right</FONT>
+		glVertex3f( 1.0f,-1.0f, 0.0f);				<FONT color=#ffffaa>// Bottom Right</FONT>
+		glVertex3f(-1.0f,-1.0f, 0.0f);				<FONT color=#ffffaa>// Bottom Left</FONT>
+	glEnd();							<FONT color=#ffffaa>// Done Drawing The Quad</FONT>
+	return TRUE;							<FONT color=#ffffaa>// Keep Going</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Finally change the code to toggle 
+      window / fullscreen mode so that the title at the top of the window is 
+      proper. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>			if (keys[VK_F1])				<FONT color=#ffffaa>// Is F1 Being Pressed?</FONT>
+			{
+				keys[VK_F1]=FALSE;			<FONT color=#ffffaa>// If So Make Key FALSE</FONT>
+				KillGLWindow();				<FONT color=#ffffaa>// Kill Our Current Window</FONT>
+				fullscreen=!fullscreen;			<FONT color=#ffffaa>// Toggle Fullscreen / Windowed Mode</FONT>
+				<FONT color=#ffffaa>// Recreate Our OpenGL Window</FONT> <FONT color=#ffaaaa>( Modified )</FONT>
+				if (!CreateGLWindow("NeHe's First Polygon Tutorial",640,480,16,fullscreen))
+				{
+					return 0;			<FONT color=#ffffaa>// Quit If Window Was Not Created</FONT>
+				}
+			}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms"><FONT color=#ff00ff>Markus Knauer 
+      Adds:</FONT><FONT color=#ffccff> In the book ("OpenGL Programming Guide: 
+      The Official Guide to Learning OpenGL, Release 1", J. Neider, T. Davis, M. 
+      Woo, Addison-Wesley, 1993) the following paragraph will clearly explain 
+      what NeHe means when he refers to movement by units in OpenGL: 
+      <BR><BR><I>"[I mentioned] inches and millimeters - do these really have 
+      anything to do with OpenGL? The answer is, in a word, no. The projection 
+      and other transformations are inheritly unitless. If you want to think of 
+      the near and far clipping planes as located at 1.0 and 20.0 meters, 
+      inches, kilometers, or leagues, it's up to you. The only rule is that you 
+      have to use consistent unit of measurement."</I></FONT> <BR><BR>In this 
+      tutorial I have tried to explain in as much detail, every step involved in 
+      drawing polygons, and quads on the screen using OpenGL. If you have 
+      comments or questions please email me. If you feel I have incorrectly 
+      commented something or that the code could be done better in some 
+      sections, please let me know. I want to make the best OpenGL tutorials I 
+      can. I'm interested in hearing your feedback. <BR><BR><FONT 
+      color=#aaccff><B>Jeff Molofee</B> (<B>NeHe</B>)</FONT> <BR><BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/vc/lesson02.zip">Visual C++</A> 
+      Code For This Lesson.<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vb/lesson02.zip">Visual Basic</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:rosscogl@email.com">Ross Dawson</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/glut/lesson02.zip">GLUT</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lordrustad@hotmail.com">Andy Restad</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cygwin/lesson02.tar.gz">Cygwin (<A 
+      href="http://www.cygwin.com/">FREE Language</A>)</A> Code For This Lesson. 
+      ( Conversion by <A href="mailto:stephan@lazyfellow.com">Stephan 
+      Ferraro</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/delphi/lesson02.zip">Delphi</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Perry.dj@glo.be">Peter De Jaegher</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/macosx/lesson02.sit.bin">MacOS 
+      X/GLUT</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:unreality@mac.com">Raal Goff</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cwarrior/lesson02.zip">Code 
+      Warrior 5</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:ddolinar@sisna.com">David Dolinar</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linuxglx/lesson02.tar.gz">Linux/GLX</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/masm/lesson02.zip">MASM</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:scalp@bigfoot.com">Nico 
+      (Scalp)</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/asm/lesson02.zip">ASM</A> Code For 
+      This Lesson. ( Conversion by <A 
+      href="mailto:foolman@bigfoot.com">Foolman</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vfortran/lesson02.zip">Visual 
+      Fortran</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linux/lesson02.tar.gz">Linux</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:ulmont@bellsouth.net">Richard Campbell</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/irix/lesson02.zip">Irix</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A 
+      href="http://nehe.gamedev.net/tutorials/solaris/lesson02.zip">Solaris</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/mac/lesson02.sit">Mac OS</A> 
+      Code For This Lesson. ( Conversion by <A href="mailto:asp@usc.edu">Anthony 
+      Parker</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/pbasic/lesson02.zip">Power 
+      Basic</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:anguslaw@net.ntl.com">Angus Law</A> )<BR>* DOWNLOAD <A 
+      target=_blank 
+      href="http://www.ngent.com/staff/chrish/opengl/index.html">BeOS</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:chrish@ngent.com">Chris 
+      Herborth</A> )<BR>* DOWNLOAD <A target=_blank 
+      href="http://dev.knowledgeassociates.com/hodglim/nehe/nehe.shtml">Java</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Hodglim@hotmail.com">Darren Hodges</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cbuilder/lesson02.zip">Borland C++ 
+      Builder 4.0</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:psalmons@helios.acomp.usf.edu">Patrick Salmons</A> )<BR>* 
+      DOWNLOAD <A href="http://sites.netscape.net/zaqhaq/">MingW32 &amp; 
+      Allegro</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:zaqhaq@netscape.net">Peter Puck</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/python/lesson02.gz">Python</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:hakuin@voicenet.com">John</A> ) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Divider -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/Lc.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/c.png" 
+      height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/Rc.png" 
+    height=28>&nbsp;</TD></TR><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms"><BR>
+      <CENTER><A target=_top href="http://nehe.gamedev.net/"><B><FONT 
+      size=+1>Back To NeHe Productions!</FONT></B></A></CENTER></FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/r.png" 
+      height=28>&nbsp;</TD></TR>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #2_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><BR><BR>
+<CENTER><!-- --></CENTER></BODY></HTML>

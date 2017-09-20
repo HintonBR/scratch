@@ -1,0 +1,17 @@
+[Project]
+FileName=C:\Bryan's Files\classes\cs312\p2\Greedy.dev
+Name=Greedy
+Use_gpp=0
+UnitCount=2
+ResFiles=C:\Bryan's Files\classes\cs312\p2\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\PROGRAM FILES\DEV-C++\Bin\Mainicon.ico
+
+[Unit1]
+FileName=C:\Bryan's Files\classes\cs312\p2\greed.c
+
+[Unit2]
+FileName=C:\Bryan's Files\classes\cs312\p2\datagen.c
+FileTime=691274995
+

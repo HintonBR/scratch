@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//Netscape Comm. Corp.//DTD HTML//EN">
+<HTML>
+<HEAD>
+    <!-- SGI_COMMENT COSMOCREATE -->
+    <!-- SGI_COMMENT VERSION NUMBER="1.1" -->
+    <TITLE>Implementation issues for JNL, a Numerical Library for Java</TITLE>
+    <!-- Changed by: Henry Darilek, 26-June-1997 -->
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+    <META NAME="GENERATOR" CONTENT="Internet Assistant for Word 1.0Z">
+    <META NAME="AUTHOR" CONTENT="John F Brophy">
+    <META NAME="OPERATOR" CONTENT="Michael G. Lenert">
+</HEAD>
+<BODY ALINK="#808000" VLINK="#008080" LINK="#4F5A9D" BGCOLOR="#FFFFFF">
+<P><MAP NAME="wpdflyer4.map">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="176,0, 360,39">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/index.html" COORDS="8,8, 88,78">
+</MAP>
+<MAP NAME="allproductsfooter-2.map">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/add.html"
+ COORDS="233,41, 341,59">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/specs.html"
+ COORDS="243,13, 330,36">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/flyer.html"
+ COORDS="169,10, 217,33">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/demos.html"
+ COORDS="136,43, 206,54">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/products/wpd/overview.html"
+ COORDS="100,19, 159,35">
+<AREA SHAPE="CIRCLE" HREF="http://www.vni.com/products/index.html" COORDS="77,31, 17">
+<AREA SHAPE="RECT" HREF="http://www.vni.com" COORDS="26,14, 56,35">
+<AREA SHAPE="RECT" HREF="http://www.vni.com/search/index.html" COORDS="4,2, 49,13">
+</MAP>
+
+<BR>
+ <IMG SRC="images/wpdflyer4.gif" USEMAP="#wpdflyer4.map" border="0"
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/wpdspecifications4.gif">
+ <BR>
+<BR>
+ <FONT SIZE="5">Java</FONT><SUP><FONT SIZE="1">TM</FONT></SUP><FONT
+ SIZE="5"> Numerical Language Proposal </FONT></P>
+<P>
+<FONT SIZE="4"><A HREF="copyrt.html">Legal Matters</A></FONT><A
+ HREF="copyrt.html"></A></P>
+<P>
+<FONT SIZE="4">Making Java Competitive for Numerical Computing </FONT></P>
+<P>
+The Java language (version 1.0) is not competitive for numerical 
+computing. Most numerical development today is done with Fortran 90, 
+MathWork's MatLab, Visual Numerics' PV-WAVE<SUP>&#174;</SUP> and 
+similar languages. This document describes a set of changes to Java to 
+make it competitive with these languages. This proposal addresses the 
+key syntactical weaknesses of Java for numerical computing.</P>
+<P>
+<FONT SIZE="4">Complex Numbers </FONT></P>
+<P>
+The first addition to Java is a <A
+ HREF="VisualNumerics.math.Complex.html">class Complex </A>that 
+implements double-precision complex arithmetic. Also the Java language 
+would be extended to allow for the use of infix operators with Complex 
+objects. In particular the unary operator - and the binary operators +, 
+-, *, /, +=, -=, *=, /= will be extended to allow Complex operands. 
+These binary operators will also be overloaded to allow for mixed 
+double and Complex operands. The increment and modulus operators will 
+not be overloaded for Complex. </P>
+<P>
+As an example, consider a function that finds a root of the quadratic 
+equation. (This is just an example, this function is not proposed as 
+part of JNL. This algorithm is not the best way to numerically compute 
+the root.) With the proposed extensions, this could be written as 
+follows. </P>
+<P>
+static Complex root(Complex a, Complex b, Complex c) {<BR>
+ return (-b+Complex.sqrt(b*b-4*a*c))/(2*a);<BR>
+ } </P>
+<P>
+Without the extensions, the function could be written as follows. </P>
+<P>
+static Complex root(Complex a, Complex b, Complex c) {<BR>
+ Complex b2 = Complex.multiply(b,b);<BR>
+ Complex ac4 = Complex.multiply(4,Complex.multiply(a,c)); <BR>
+ Complex discrim = Complex.sqrt(Complex.subtract(b2,ac4)); <BR>
+ return 
+Complex.divide(Complex.subtract(discrim,b)),Complex.multiply(2,a))); <BR>
+ } </P>
+<H3>
+Issues for the class Complex: </H3>
+<UL>
+    <LI>
+    Should both float complex and double complex be implemented? The 
+    current JNL proposal calls for implementing only double complex. 
+    <LI>
+    Class Complex will contain static member functions analogous to those 
+    now in class java.lang.Math. Exactly what functions should be included? 
+    See <A HREF="VisualNumerics.math.Complex.html">class Complex</A>
+     for the current proposal. 
+</UL>
+<P>
+<FONT SIZE="4">Array Operators </FONT></P>
+<P>
+This proposal calls for overloading the infix operators to work with 
+arrays of built-in Java types: byte, short, int, char, float, double, 
+boolean, and Complex. The operations will be applied elementwise. </P>
+<P>
+For example, the following code fragment </P>
+<P>
+double x[], y[], z[];<BR>
+ /* omitted code to initialize x and y */<BR>
+ z = x * y;<BR>
+ </P>
+<P>
+is equivalent to </P>
+<P>
+double x[], y[], z[];<BR>
+ /* omitted code to initialize x and y */<BR>
+ if (x.length != y.length) throw IllegalArrayException;<BR>
+ z = new double[x.length];<BR>
+ for (int k = 0; k &lt; x.length; k++)<BR>
+ z[k] = x[k] * y[k]; </P>
+<P>
+Infix operators are allowed for arrays only if they are allowed for the 
+underlying simple types. </P>
+<P>
+Type promotion follows the same rules as for simple types. </P>
+<H3>
+Issues for Array Operators </H3>
+<P>
+For linear algebra only arrays of type double need to be overloaded. 
+But for other arrays, such as image processing, operations on arrays of 
+integral types are needed. </P>
+<P>
+<FONT SIZE="4">Array Sections </FONT></P>
+<P>
+This proposal also calls for adding an array section syntax to Java. If 
+v is a one-dimensional array, then the array section v[3:9:2] stands 
+for {v[3], v[5], v[7], v[9]}. The syntax is <I>first</I>:<I>last</I>:<I>increment</I>. 
+All three parts are optional; they default to 0:length-1:1. Also 
+allowed are the forms <I>first</I>:<I>last</I> and a single colon (:), 
+which stands for the entire array. Array section operators can also be 
+used with higher dimensional arrays, e.g. a[3:9:2][0:5], a[:][0:5]. </P>
+<P>
+Array sections can be lvalues, i.e. they can appear on the left side of 
+the equal sign. In that case, changes to the section also change the 
+underlying array values. In other cases, such as when a section is 
+passed as an argument to a function, the section is an array containing 
+a copy of the data. </P>
+<P>
+An array section operation can throw an 
+ArraySectionOutOfBoundsException. </P>
+<P>
+<FONT SIZE="5">JNL, a Java Numerical Library Proposal </FONT></P>
+<P>
+JNL, the Java Numerical Library proposal is a set of classes for the 
+most important numerical functions missing in Java. These classes are 
+independent of the Java Numerical Language proposal, except that both 
+require class Complex. This part of the proposal does not require that 
+the infix operators work with Complex numbers.</P>
+<P>
+<FONT SIZE="4">Linear Algebra </FONT></P>
+<P>
+The linear algebra class manipulate rectangular or square arrays of 
+type double or Complex. A rectangular matrix is a double[][] with all 
+of its rows the same length. A square matrix is a rectangular matrix 
+with the number of columns equal to the number of rows. </P>
+<P>
+The <A HREF="VisualNumerics.math.DoubleVector.html">class DoubleVector</A>
+ contains static methods for manipulating vectors. It does not define 
+a vector object; it is not possible to create an instance of 
+DoubleVector. There are methods for vector norms, maximum and minimum 
+elements, and dot product. </P>
+<P>
+The <A HREF="VisualNumerics.math.DoubleMatrix.html">class DoubleMatrix</A>
+ contains static methods for manipulating matrices. It does not define 
+a matrix object; it is not possible to create an instance of 
+DoubleMatrix. There are methods for matrix multiplication, inversion 
+and solving linear systems. </P>
+<P>
+The classes <A HREF="VisualNumerics.math.DoubleCholesky.html">DoubleCholesky</A>, 
+<A HREF="VisualNumerics.math.DoubleLU.html">DoubleLU</A>, <A
+ HREF="VisualNumerics.math.DoubleQR.html">DoubleQR</A> and <A
+ HREF="VisualNumerics.math.DoubleSVD.html">DoubleSVD</A> encapsulate 
+standard matrix decompositions. Their constructors take a matrix as an 
+argument and compute the decomposition. This may throw an exception. 
+Other member functions are then used to use or return parts of the 
+decomposition. </P>
+<P>
+Analogous to these classes for double-precision arrays there will 
+also be classes for Complex arrays.</P>
+<P>
+<FONT SIZE="4">Special Functions</FONT> </P>
+<P>
+The <A HREF="VisualNumerics.math.Sfun.html">class Sfun</A> contains a 
+collection of special functions. This class is analogous to the 
+existing class java.lang.Math, but contains more advanced functions. 
+This class is a collection of static member functions and data; it 
+cannot be instantiated.</P>
+<P>
+<FONT SIZE="4">Statistics</FONT> </P>
+<P>
+The <A HREF="VisualNumerics.math.Statistics.html">class Statistics</A>
+ contains a collection of basic statistical functions. This class is a 
+collection of static member functions; it cannot be instantiated. <BR>
+<P>
+<FONT SIZE="4">Mircrosoft Excel(tm) Statistics and Finance </FONT> </P>
+<P>
+There are a number of  <A HREF="fin.htm">statistical and financial functions</A>
+available in Microsoft Excel(tm) that are not currently in the JNL 
+specification.  VNI has implemented these functions in Java for the 
+SmartTable product.
+It has been sugggested that we should include them in the JNL as well.  
+<A HREF="mailto:javajim@boulder.vni.com">Comments? </a>
+<BR>
+ <BR CLEAR="ALL">
+ <IMG SRC="images/allproductsfooter.gif" USEMAP="#allproductsfooter-2.map" WIDTH="430" HEIGHT="57" BORDER="0"
+
+ SGI_SRC="/depot/client/robin/data1/mangi/www/docs2/products/pics/allproductsfooter.gif">
+ </P>
+<P>
+<BR>
+ <FONT SIZE="1">Copyright &#169; 1997 - Visual Numerics, Inc.&#174; </FONT></P>
+</BODY>
+</HTML>

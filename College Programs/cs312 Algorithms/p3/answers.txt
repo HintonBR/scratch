@@ -1,0 +1,18 @@
+Answers for the test cases:
+
+File: a.dat   Optimal Distance: 6   	Optimal Path: AJBEICFGDHA
+File: b.dat   Optimal Distance: 46  	Optimal Path: ABCDEFGHIJA
+File: c.dat   Optimal Distance: 67  	Optimal Path: ABCDEFGHIJKLA
+File: d.dat   Optimal Distance: 55  	Optimal Path: ALKJIHGFEDCBA
+File: e.dat   Optimal Distance: 139  	Optimal Path: AKIBDGHJNCFLMEA
+File: g.dat   Optimal Distance: 14  	Optimal Path: ACJLPMFHNOKBIEGDA
+File: j.dat   Optimal Distance: 0   	Optimal Path: AQPONKMJLHBCEDIGFA
+
+
+
+
+
+
+
+
+Last Updated 14 October 1998

@@ -1,0 +1,21 @@
+Schemes:
+        snap(STUDENTID,STUDENTNAME,ADDRESS,PHONE)
+        csg(C,STUDENTID, G)
+                hasafive(STUDENTNAME, STUDENTID,GRADE)
+
+Facts:
+        snap('12345','C. Brown','12 Apple St.','555-1234').
+        csg('CS101','12345','A').
+        csg('CS105','12345', 'A' ).
+        csg('cs236', '45678', 'a').
+        snap('45678', 'me', 'hi how are you', '4567890').
+Rules:
+        WhoGradeCourse(N,G,C):-csg(C,S,G),snap(S,N,'12 Apple St.',P).
+         WhoGradeasdfasdfCourse(N,G,C):-csg(C,S,G),snap(S,N,A,P),=(A,  'hi how are you').
+         hasafive(N, H, F):-snap(B,N,C,D), =(N, 'me'), csg(F, B, H). 
+         myfile(S, N, ADDRESS, P):-snap(S, N, '12 Apple St.', P).
+Queries:
+        WhoGradeCourse('Snoopy',G,C)?
+         WhoGradeCourse('me',G,C)?
+         snap(S, N, '12 Apple St.', P)?
+

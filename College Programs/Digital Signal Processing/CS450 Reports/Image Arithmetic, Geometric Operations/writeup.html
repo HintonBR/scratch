@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Project Writeup</title>
+</head>
+
+<body bgcolor="#CCCCCC" text="#006633" link="#FFFF00">
+<table border="5" bordercolor="#008040" align="center">
+<caption align="center"><h2>Project Writeup</h2></caption>
+<tr><td align="left">
+In the source code there are comments to indicate where the code segments are that fulfilled the project.
+I basically split it up into separate functions that took care of image rotation (the rotateImage method), interpolation
+(the interpolate method), and the subtractImage method which performed the image subtraction.  
+<br><strong>Image Subtraction</strong><br>
+After going through pixel by pixel and subtracting the values to generate the output image I then created a histogram
+of the new image and plotted it with Gnuplot.  By doing this I was able to establish threshold values at 140 and 200.  
+Everything between that range I called on and using the summation of each "ON" pixel divided by the number of pixels that
+were on I determined that the center of gravity was at the point 313, 268.
+<br><strong>Image Translation and Rotation</strong><br>
+I calculated the backwards warping algorithm for the transformation function to be<br> 
+<code>y = (y<sup>'</sup> - yc)cosine(t) - (x<sup>'</sup> - xc)sine(t) + yc</code><br>
+<code>x = (y<sup>'</sup> - yc)sine(t) + (x<sup>'</sup> - xc)cosine(t) + xc</code><br>    
+I then used bilinear interpolation based on the equation given in the book to interpolate the output data points
+from the input values calculated.  The difference between the two images that were rotated a total of 120 degrees
+is obvious.  The reason why the one that was rotated in 15 degree increments to 120 degree stems from the loss
+of data that occurs in the intervening transformations.  Each 15 degree rotation causes certain points to be mapped
+outside the viewable size of the image (the image is finite) so we lose those data values.  When in subsequent rotations
+those values would have been rotated back in they no longer exist in the output image and so black is mapped in and 
+we get the rounded edges because it is those outer edges that are getting rotated out and then back in.  The 120 degree
+rotation does the mapping immediately and so we don't get the intermediate data loss and thus then output image looks
+complete and correct. 
+</tr>
+</table>
+
+</body>
+</html>

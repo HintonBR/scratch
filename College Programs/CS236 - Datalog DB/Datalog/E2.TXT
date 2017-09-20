@@ -1,0 +1,30 @@
+Schemes:
+	student(N, I, A, M)
+	grade(I, C, G)
+Facts:
+	student('North', '51', '10 Main', 'philosophy').
+   	student('Reagan','52', '11 Maple', 'CS').
+   	student('Clinton','53','12 Ashton', 'Politics').
+	student('Bush','54', '13 Ashton', 'Diplomacy').
+	student('Nixon','55','11 Main', 'Math').
+	grade('51', 'PH 100', 'A').
+	grade('51', 'CHEM 105', 'B').
+	grade('52', 'MATH 110', 'C').
+	grade('52', 'EE 220', 'D').
+	grade('53', 'EE 317', 'A').
+	grade('53', 'CS 330', 'B').
+	grade('53', 'CS 452', 'C').
+	grade('54', 'CS 236', 'C').
+	grade('54', 'CS 235', 'D').
+	grade('54', 'PH 100', 'B').
+	grade('55', 'MATH 547', 'A').
+	grade('55', 'MATH 541', 'B').
+	grade('55', 'CS 452', 'C').
+	grade('55', 'PH 100', 'D').
+Rules:
+	WhoMajor(N,M):-student(N,I,A,M).
+	WhoGrade(N,C,G):-student(N,I,A,M), grade(I,C,G).
+Queries:
+	WhoMajor('North',M)?
+	WhoMajor(N,'MATH')?
+	WhoGrade(N,'PH 100', G)?

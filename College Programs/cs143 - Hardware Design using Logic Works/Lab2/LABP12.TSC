@@ -1,0 +1,7 @@
+.ORG 0X0000
+LAD $1, 10
+LAD $2, 4
+ADD $2, $2, $1
+WWD $2
+HLT
+.END

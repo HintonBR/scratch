@@ -1,0 +1,692 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0046)http://nehe.gamedev.net/tutorials/lesson05.asp -->
+<HTML><HEAD><TITLE>Jeff Molofee's OpenGL Windows Tutorial #5</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<STYLE type=text/css>A:link {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #ccaaff; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ffccaa; TEXT-DECORATION: none
+}
+</STYLE>
+
+<META content="MSHTML 5.50.4616.200" name=GENERATOR></HEAD>
+<BODY text=#ffffff bgColor=#000000>
+<CENTER><!-- Begin Ban Man Pro Banner Code -  Zone: NeHe -->
+<SCRIPT language=JAVASCRIPT>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE6&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<S'+'CRIPT src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Browser=NETSCAPE4">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<A HREF="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Click&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" target="_new"><IMG SRC="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&Mode=HTML&PageID=70554&RandomNumber=' + browDateTime + '" width="468" height="60" border="0"></A>'); } }
+if (browName=='Microsoft Internet Explorer')
+     { document.write('<ifr'+'ame src="http://www.gamedev.net/banman/banman.asp?ZoneID=4&Task=Get&X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A target=_new 
+href="http://www.gamedev.net/banman/banman.asp?ZoneID=4&amp;Task=Click&amp;Mode=HTML&amp;PageID=70554"><IMG 
+height=60 src="Jeff Molofee's OpenGL Windows Tutorial #5_files/468x60_12k.gif" 
+width=468 border=0></A> </NOSCRIPT><!-- End Ban Man Pro Banner Code -  Zone: NeHe --></CENTER><BR><BR><!-- NeHe Logo -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=326 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/logo.png" 
+    height=130>&nbsp;</TD>
+    <TD vAlign=center align=middle width="100%"><FONT color=#ffccaa 
+      size=+3><B><I>Lesson 5</I></B></FONT></TD></TR></TBODY></TABLE><!-- Top Border - Joins With Logo (298) -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Expanding on the last tutorial, 
+      we'll now make the object into TRUE 3D object, rather than 2D objects in a 
+      3D world. We will do this by adding a left, back, and right side to the 
+      triangle, and a left, right, back, top and bottom to the square. By doing 
+      this, we turn the triangle into a pyramid, and the square into a cube. 
+      <BR><BR>We'll blend the colors on the pyramid, creating a smoothly colored 
+      object, and for the square we'll color each face a different color. 
+    </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>int DrawGLScene(GLvoid)						<FONT color=#ffffaa>// Here's Where We Do All The Drawing</FONT>
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	<FONT color=#ffffaa>// Clear The Screen And The Depth Buffer</FONT>
+	glLoadIdentity();					<FONT color=#ffffaa>// Reset The View</FONT>
+	glTranslatef(-1.5f,0.0f,-6.0f);				<FONT color=#ffffaa>// Move Left And Into The Screen</FONT>
+
+	glRotatef(rtri,0.0f,1.0f,0.0f);				<FONT color=#ffffaa>// Rotate The Pyramid On It's Y Axis</FONT>
+
+	glBegin(GL_TRIANGLES);					<FONT color=#ffffaa>// Start Drawing The Pyramid</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">A few of you have taken the code 
+      from the last tutorial, and made 3D objects of your own. One thing I've 
+      been asked quite a bit is "how come my objects are not spinning on their 
+      axis? It seems like they are spinning all over the screen". In order for 
+      your object to spin around an axis, it has to be designed AROUND that 
+      axis. You have to remember that the center of any object should be 0 on 
+      the X, 0 on the Y, and 0 on the Z. <BR><BR>The following code will create 
+      the pyramid around a central axis. The top of the pyramid is one high from 
+      the center, the bottom of the pyramid is one down from the center. The top 
+      point is right in the middle (zero), and the bottom points are one left 
+      from center, and one right from center. <BR><BR>Note that all triangles 
+      are drawn in a counterclockwise rotation. This is important, and will be 
+      explained in a future tutorial, for now, just know that it's good practice 
+      to make objects either clockwise or counterclockwise, but you shouldn't 
+      mix the two unless you have a reason to. <BR><BR>We start off by drawing 
+      the Front Face. Because all of the faces share the top point, we will make 
+      this point red on all of the triangles. The color on the bottom two points 
+      of the triangles will alternate. The front face will have a green left 
+      point and a blue right point. Then the triangle on the right side will 
+      have a blue left point and a green right point. By alternating the bottom 
+      two colors on each face, we make a common colored point at the bottom of 
+      each face. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,0.0f);			<FONT color=#ffffaa>// Red</FONT>
+		glVertex3f( 0.0f, 1.0f, 0.0f);			<FONT color=#ffffaa>// Top Of Triangle (Front)</FONT>
+		glColor3f(0.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Green</FONT>
+		glVertex3f(-1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Left Of Triangle (Front)</FONT>
+		glColor3f(0.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Blue</FONT>
+		glVertex3f( 1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Right Of Triangle (Front)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we draw the right face. Notice 
+      then the two bottom point are drawn one to the right of center, and the 
+      top point is drawn one up on the y axis, and right in the middle of the x 
+      axis. causing the face to slope from center point at the top out to the 
+      right side of the screen at the bottom. <BR><BR>Notice the left point is 
+      drawn blue this time. By drawing it blue, it will be the same color as the 
+      right bottom corner of the front face. Blending blue outwards from that 
+      one corner across both the front and right face of the pyramid. 
+      <BR><BR>Notice how the remaining three faces are included inside the same 
+      glBegin(GL_TRIANGLES) and glEnd() as the first face. Because we're making 
+      this entire object out of triangles, OpenGL will know that every three 
+      points we plot are the three points of a triangle. Once it's drawn three 
+      points, if there are three more points, it will assume another triangle 
+      needs to be drawn. If you were to put four points instead of three, OpenGL 
+      would draw the first three and assume the fourth point is the start of a 
+      new triangle. It would not draw a Quad. So make sure you don't add any 
+      extra points by accident. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,0.0f);			<FONT color=#ffffaa>// Red</FONT>
+		glVertex3f( 0.0f, 1.0f, 0.0f);			<FONT color=#ffffaa>// Top Of Triangle (Right)</FONT>
+		glColor3f(0.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Blue</FONT>
+		glVertex3f( 1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Left Of Triangle (Right)</FONT>
+		glColor3f(0.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Green</FONT>
+		glVertex3f( 1.0f,-1.0f, -1.0f);			<FONT color=#ffffaa>// Right Of Triangle (Right)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now for the back face. Again the 
+      colors switch. The left point is now green again, because the corner it 
+      shares with the right face is green. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,0.0f);			<FONT color=#ffffaa>// Red</FONT>
+		glVertex3f( 0.0f, 1.0f, 0.0f);			<FONT color=#ffffaa>// Top Of Triangle (Back)</FONT>
+		glColor3f(0.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Green</FONT>
+		glVertex3f( 1.0f,-1.0f, -1.0f);			<FONT color=#ffffaa>// Left Of Triangle (Back)</FONT>
+		glColor3f(0.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Blue</FONT>
+		glVertex3f(-1.0f,-1.0f, -1.0f);			<FONT color=#ffffaa>// Right Of Triangle (Back)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Finally we draw the left face. The 
+      colors switch one last time. The left point is blue, and blends with the 
+      right point of the back face. The right point is green, and blends with 
+      the left point of the front face. <BR><BR>We're done drawing the pyramid. 
+      Because the pyramid only spins on the Y axis, we will never see the 
+      bottom, so there is no need to put a bottom on the pyramid. If you feel 
+      like experimenting, try adding a bottom using a quad, then rotate on the X 
+      axis to see if you've done it correctly. Make sure the color used on each 
+      corner of the quad matches up with the colors being used at the four 
+      corners of the pyramid. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,0.0f);			<FONT color=#ffffaa>// Red</FONT>
+		glVertex3f( 0.0f, 1.0f, 0.0f);			<FONT color=#ffffaa>// Top Of Triangle (Left)</FONT>
+		glColor3f(0.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Blue</FONT>
+		glVertex3f(-1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Left Of Triangle (Left)</FONT>
+		glColor3f(0.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Green</FONT>
+		glVertex3f(-1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Right Of Triangle (Left)</FONT>
+	glEnd();						<FONT color=#ffffaa>// Done Drawing The Pyramid</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we'll draw the cube. It's made 
+      up of six quads. All of the quads are drawn in a counter clockwise order. 
+      Meaning the first point is the top right, the second point is the top 
+      left, third point is bottom left, and finally bottom right. When we draw 
+      the back face, it may seem as though we are drawing clockwise, but you 
+      have to keep in mind that if we were behind the cube looking at the front 
+      of it, the left side of the screen is actually the right side of the quad, 
+      and the right side of the screen would actually be the left side of the 
+      quad. <BR><BR>Notice we move the cube a little further into the screen in 
+      this lesson. By doing this, the size of the cube appears closer to the 
+      size of the pyramid. If you were to move it only 6 units into the screen, 
+      the cube would appear much larger than the pyramid, and parts of it might 
+      get cut off by the sides of the screen. You can play around with this 
+      setting, and see how moving the cube further into the screen makes it 
+      appear smaller, and moving it closer makes it appear larger. The reason 
+      this happens is perspective. Objects in the distance should appear smaller 
+      :) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>	glLoadIdentity();
+	glTranslatef(1.5f,0.0f,-7.0f);				<FONT color=#ffffaa>// Move Right And Into The Screen</FONT>
+
+	glRotatef(rquad,1.0f,1.0f,1.0f);			<FONT color=#ffffaa>// Rotate The Cube On X, Y &amp; Z</FONT>
+
+	glBegin(GL_QUADS);					<FONT color=#ffffaa>// Start Drawing The Cube</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">We'll start off by drawing the top 
+      of the cube. We move up one unit from the center of the cube. Notice that 
+      the Y axis is always one. We then draw a quad on the Z plane. Meaning into 
+      the screen. We start off by drawing the top right point of the top of the 
+      cube. The top right point would be one unit right, and one unit into the 
+      screen. The second point would be one unit to the left, and unit into the 
+      screen. Now we have to draw the bottom of the quad towards the viewer. so 
+      to do this, instead of going into the screen, we move one unit towards the 
+      screen. Make sense? </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(0.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Set The Color To Green</FONT>
+		glVertex3f( 1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Top)</FONT>
+		glVertex3f(-1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Top)</FONT>
+		glVertex3f(-1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Top)</FONT>
+		glVertex3f( 1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Top)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">The bottom is drawn the exact same 
+      way as the top, but because it's the bottom, it's drawn down one unit from 
+      the center of the cube. Notice the Y axis is always minus one. If we were 
+      under the cube, looking at the quad that makes the bottom, you would 
+      notice the top right corner is the corner closest to the viewer, so 
+      instead of drawing in the distance first, we draw closest to the viewer 
+      first, then on the left side closest to the viewer, and then we go into 
+      the screen to draw the bottom two points. <BR><BR>If you didn't really 
+      care about the order the polygons were drawn in (clockwise or not), you 
+      could just copy the same code for the top quad, move it down on the Y axis 
+      to -1, and it would work, but ignoring the order the quad is drawn in can 
+      cause weird results once you get into fancy things such as texture 
+      mapping. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.5f,0.0f);			<FONT color=#ffffaa>// Set The Color To Orange</FONT>
+		glVertex3f( 1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Bottom)</FONT>
+		glVertex3f(-1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Bottom)</FONT>
+		glVertex3f(-1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Bottom)</FONT>
+		glVertex3f( 1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Bottom)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we draw the front of the Quad. 
+      We move one unit towards the screen, and away from the center to draw the 
+      front face. Notice the Z axis is always one. In the pyramid the Z axis was 
+      not always one. At the top, the Z axis was zero. If you tried changing the 
+      Z axis to zero in the following code, you'd notice that the corner you 
+      changed it on would slope into the screen. That's not something we want to 
+      do right now :) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,0.0f);			<FONT color=#ffffaa>// Set The Color To Red</FONT>
+		glVertex3f( 1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Front)</FONT>
+		glVertex3f(-1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Front)</FONT>
+		glVertex3f(-1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Front)</FONT>
+		glVertex3f( 1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Front)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">The back face is a quad the same 
+      as the front face, but it's set deeper into the screen. Notice the Z axis 
+      is now minus one for all of the points. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,1.0f,0.0f);			<FONT color=#ffffaa>// Set The Color To Yellow</FONT>
+		glVertex3f( 1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Back)</FONT>
+		glVertex3f(-1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Back)</FONT>
+		glVertex3f(-1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Back)</FONT>
+		glVertex3f( 1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Back)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">Now we only have two more quads to 
+      draw and we're done. As usual, you'll notice one axis is always the same 
+      for all the points. In this case the X axis is always minus one. That's 
+      because we're always drawing to the left of center because this is the 
+      left face. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(0.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Set The Color To Blue</FONT>
+		glVertex3f(-1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Left)</FONT>
+		glVertex3f(-1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Left)</FONT>
+		glVertex3f(-1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Left)</FONT>
+		glVertex3f(-1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Left)</FONT>
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">This is the last face to complete 
+      the cube. The X axis is always one. Drawing is counter clockwise. If you 
+      wanted to, you could leave this face out, and make a box :) <BR><BR>Or if 
+      you felt like experimenting, you could always try changing the color of 
+      each point on the cube to make it blend the same way the pyramid blends. 
+      You can see an example of a blended cube by downloading Evil's first GL 
+      demo from my web page. Run it and press TAB. You'll see a beautifully 
+      colored cube, with colors flowing across all the faces. </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Border -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><FONT color=#aaffaa><PRE>		glColor3f(1.0f,0.0f,1.0f);			<FONT color=#ffffaa>// Set The Color To Violet</FONT>
+		glVertex3f( 1.0f, 1.0f,-1.0f);			<FONT color=#ffffaa>// Top Right Of The Quad (Right)</FONT>
+		glVertex3f( 1.0f, 1.0f, 1.0f);			<FONT color=#ffffaa>// Top Left Of The Quad (Right)</FONT>
+		glVertex3f( 1.0f,-1.0f, 1.0f);			<FONT color=#ffffaa>// Bottom Left Of The Quad (Right)</FONT>
+		glVertex3f( 1.0f,-1.0f,-1.0f);			<FONT color=#ffffaa>// Bottom Right Of The Quad (Right)</FONT>
+	glEnd();						<FONT color=#ffffaa>// Done Drawing The Quad</FONT>
+
+	rtri+=0.2f;						<FONT color=#ffffaa>// Increase The Rotation Variable For The Triangle </FONT>
+	rquad-=0.15f;						<FONT color=#ffffaa>// Decrease The Rotation Variable For The Quad </FONT>
+	return TRUE;						<FONT color=#ffffaa>// Keep Going</FONT>
+}
+</PRE></FONT><!-- Top Border -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tl.png">&nbsp;</TD>
+    <TD width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tc.png">&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/tr.png">&nbsp;</TD><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms">By the end of this tutorial, you 
+      should have a better understanding of how objects are created in 3D space. 
+      You have to think of the OpenGL screen as a giant piece of graph paper, 
+      with many transparent layers behind it. Almost like a giant cube made of 
+      of points. Some of the points move left to right, some move up and down, 
+      and some move further back in the cube. If you can visualize the depth 
+      into the screen, you shouldn't have any problems designing new 3D objects. 
+      <BR><BR>If you're having a hard time understanding 3D space, don't get 
+      frustrated. It can be difficult to grasp right off the start. An object 
+      like the cube is a good example to learn from. If you notice, the back 
+      face is drawn exactly the same as the front face, it's just further into 
+      the screen. Play around with the code, and if you just can't grasp it, 
+      email me, and I'll try to answer your questions. <BR><BR><FONT 
+      color=#aaccff><B>Jeff Molofee</B> (<B>NeHe</B>)</FONT> <BR><BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/vc/lesson05.zip">Visual C++</A> 
+      Code For This Lesson.<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vb/lesson05.zip">Visual Basic</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:rosscogl@email.com">Ross Dawson</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/glut/lesson05.zip">GLUT</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lordrustad@hotmail.com">Andy Restad</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cygwin/lesson05.tar.gz">Cygwin (<A 
+      href="http://www.cygwin.com/">FREE Language</A>)</A> Code For This Lesson. 
+      ( Conversion by <A href="mailto:stephan@lazyfellow.com">Stephan 
+      Ferraro</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/delphi/lesson05.zip">Delphi</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Perry.dj@glo.be">Peter De Jaegher</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/macosx/lesson05.sit.bin">MacOS 
+      X/GLUT</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:unreality@mac.com">Raal Goff</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linuxglx/lesson05.tar.gz">Linux/GLX</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cwarrior/lesson05.zip">Code 
+      Warrior 5</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:splupton@hotmail.com">Scott Lupton</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/masm/lesson05.zip">MASM</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:scalp@bigfoot.com">Nico 
+      (Scalp)</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/asm/lesson05.zip">ASM</A> Code For 
+      This Lesson. ( Conversion by <A 
+      href="mailto:foolman@bigfoot.com">Foolman</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/vfortran/lesson05.zip">Visual 
+      Fortran</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</A> 
+      )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/linux/lesson05.tar.gz">Linux</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:ulmont@bellsouth.net">Richard Campbell</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/irix/lesson05.zip">Irix</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A 
+      href="http://nehe.gamedev.net/tutorials/solaris/lesson05.zip">Solaris</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</A> )<BR>* DOWNLOAD 
+      <A href="http://nehe.gamedev.net/tutorials/mac/lesson05.sit">Mac OS</A> 
+      Code For This Lesson. ( Conversion by <A href="mailto:asp@usc.edu">Anthony 
+      Parker</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/pbasic/lesson05.zip">Power 
+      Basic</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:anguslaw@net.ntl.com">Angus Law</A> )<BR>* DOWNLOAD <A 
+      target=_blank 
+      href="http://www.ngent.com/staff/chrish/opengl/index.html">BeOS</A> Code 
+      For This Lesson. ( Conversion by <A href="mailto:chrish@ngent.com">Chris 
+      Herborth</A> )<BR>* DOWNLOAD <A target=_blank 
+      href="http://dev.knowledgeassociates.com/hodglim/nehe/nehe.shtml">Java</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:Hodglim@hotmail.com">Darren Hodges</A> )<BR>* DOWNLOAD <A 
+      href="http://sites.netscape.net/zaqhaq/">MingW32 &amp; Allegro</A> Code 
+      For This Lesson. ( Conversion by <A 
+      href="mailto:zaqhaq@netscape.net">Peter Puck</A> )<BR>* DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/cbuilder/lesson05.zip">Borland C++ 
+      Builder 4.0</A> Code For This Lesson. ( Conversion by <A 
+      href="mailto:psalmons@helios.acomp.usf.edu">Patrick Salmons</A> )<BR>* 
+      DOWNLOAD <A 
+      href="http://nehe.gamedev.net/tutorials/python/lesson05.gz">Python</A> 
+      Code For This Lesson. ( Conversion by <A 
+      href="mailto:acolston@midsouth.rr.com">Tony Colston</A> ) </FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR><!-- Bottom Divider -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/Lc.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/c.png" 
+      height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/Rc.png" 
+    height=28>&nbsp;</TD></TR><!-- Border Edges & Content -->
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/l.png">&nbsp;</TD>
+    <TD vAlign=top align=left width="100%"><FONT 
+      face="arial,trebuchet ms,comic sans ms"><BR>
+      <CENTER><A target=_top href="http://nehe.gamedev.net/"><B><FONT 
+      size=+1>Back To NeHe Productions!</FONT></B></A></CENTER></FONT></TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/r.png" 
+      height=28>&nbsp;</TD></TR>
+  <TR>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bl.png" 
+    height=28>&nbsp;</TD>
+    <TD vAlign=top width="100%" 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/bc.png" 
+    height=28>&nbsp;</TD>
+    <TD noWrap width=28 
+    background="Jeff Molofee's OpenGL Windows Tutorial #5_files/br.png" 
+    height=28>&nbsp;</TD></TR></TBODY></TABLE><BR><BR>
+<CENTER><!-- --></CENTER></BODY></HTML>

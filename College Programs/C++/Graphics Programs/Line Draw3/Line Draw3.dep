@@ -1,0 +1,5 @@
+# Microsoft Developer Studio Generated Dependency File, included by Line Draw3.mak
+
+".\Line Draw3.cpp" : \
+	"..\..\..\..\program files\microsoft visual studio\vc98\include\gl\glut.h"\
+	
